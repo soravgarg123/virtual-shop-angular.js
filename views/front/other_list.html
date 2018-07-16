@@ -1,0 +1,188 @@
+<div class="main_container" ng-init="otherList();initialize();">
+
+      <section class="tab_sec time_line_sec">
+
+          <div id="map_div" class="mep"></div>
+
+          <div class="container">
+            <div class="tab_par clearfix">
+              <p class="title">Suggestions for <b>Coffee</b> near <b>Indore</b></p>
+             
+                <ul class="list-inline nav_bar" >
+                    <li ng-class="(activeClass == 'near_me')? 'active' : ''" class="list-inline-item"><a ng-class="(activeClass == 'near_me')? 'active' : ''"  ng-click="nearMe('near_me','near_me')" href="javascript:void(0)"  translate>NEAR_ME</a></li>
+                    <li class="list-inline-item dropdown" ng-class="(activeClass == 'cheap')? 'active' : ''">
+                
+                        <a class="dropdown-toggle " ng-class="(activeClass == 'cheap' || activeClass == 'moderate' || activeClass == 'expensive')? 'active' : ''" href="javascript:void(0)" data-toggle="dropdown" translate>PRICE<span class="caret"></span></a>
+                        <div class="dropdown-menu" >
+                              <a ng-click="searchType('price',1,'cheap')" ng-class="(activeClass == 'cheap')? 'active' : ''"  class="dropdown-item" href="javascript:void(0)" translate>CHEAP</a>
+                              <a ng-click="searchType('price',2,'moderate')" ng-class="(activeClass == 'moderate')? 'active' : ''" class="dropdown-item" href="javascript:void(0)" translate>MODERATE</a>
+                              <a ng-click="searchType('price',3,'expensive')"  ng-class="(activeClass == 'expensive')? 'active' : ''" class="dropdown-item" href="javascript:void(0)" translate>EXPENSIVE</a>
+                        </div>
+                     
+                    </li> 
+                    <li class="list-inline-item" ng-class="(activeClass == 'order_anytime')? 'active' : ''"><a href="javascript:void(0)" ng-class="(activeClass == 'order_anytime')? 'active' : ''" ng-click="searchType('orderType',2,'order_anytime')" translate>ORDER_ANYTIME</a></li>
+                    <li class="list-inline-item" ng-class="(activeClass == 'preorder_required')? 'active' : ''"><a href="javascript:void(0)" ng-class="(activeClass == 'preorder_required')? 'active' : ''" ng-click="searchType('orderType',1,'preorder_required')" translate>PREORDER_REQUIRED</a></li>
+                    <li ng-class="(activeClass == 'rating')? 'active' : ''" class="list-inline-item"><a href="javascript:void(0)" ng-class="(activeClass == 'rating')? 'active' : ''" ng-click="searchType('rating',1,'rating')" translate>RATINGS</a></li>
+                  </ul>
+
+                <!-- Tab panes -->
+
+                <div class=""  >
+                  <div class="form-group"  >
+                    <div class="row">
+                      <div class="col-sm-6" ng-repeat="otherList in otherLists">
+                        <div class="time_line_box">
+                          <div class="widget" >
+                              <div class="widgetNum">{{$index+1}}</div>
+                                <div class="widget_img">
+                                  <a href="/places-detail/{{otherList.placeID}}/{{otherList.placeName | nospace}}"> <img ng-if="otherList.placesPhotos[0].originalPhoto" ng-src="{{otherList.placesPhotos[0].originalPhoto}}" on-error-src="{{serverPath.no_user_place}}" alt="">
+                                  <img ng-if="!otherList.placesPhotos[0].originalPhoto" ng-src="{{serverPath.no_user_place}}"  alt=""></a>
+                                </div>
+                            <div class="widget_center">
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <a href="/places-detail/{{otherList.placeID}}/{{otherList.placeName | nospace}}"><h2>{{otherList.placeName}}</h2></a>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="top_Num text-right pr-2">
+                                   <label for="">{{otherList.rating}}</label>
+                    <a ng-if="otherList.is_like
+                    ==1" href="javascript:void(0)" ng-click=" (!placeLikeLoader) ? placeLike(otherList.placeID , $index, 'other') :angular.noop()" class="like_btn "><i class="fa fa-heart"></i></a> 
+                    <a ng-if="!(otherList.is_like
+                    ==1)" href="javascript:void(0)" ng-click=" (!placeLikeLoader) ? placeLike(otherList.placeID , $index, 'other') :angular.noop()" class="like_btn liked"><i class="fa fa-heart-o" ></i></a>
+                                                      
+                                 </div>
+                                </div>
+                              </div>
+                              <h3> Status: {{otherList.orderType=='1' ? 'Preorder required' : 'Order Anytime' }}</h3>
+                              <p><i class="fa fa-map-marker"> </i> {{otherList.placesLocation[0].location}}</p>
+                              <div class="row btn_par">
+                                <div class="col-sm-6">
+                                    <button  type="button" href="javascript:void(0)" id="addListBtn" data-toggle="modal" ng-click="addLists('addList',otherList.placeID)" class="btn_transparent btn_add " ><i class="fa fa-plus-circle"></i>Add to List</button>
+                                </div>
+
+                                <div class="col-sm-6 text-right">
+                                   
+                                </div>
+                              </div>
+                            </div>
+                          </div><!--widget-->
+                        </div>
+                        </div>
+                  
+
+                     
+                      
+                      </div>
+                  </div><!--tab-pane-->
+                  
+                  <div ng-if="loadMore" class="text-center"></br><button ng-click="(!otherListLoader) ? otherList() : angular.noop">{{(!otherListLoader) ? 'Add More' : '...Loading'}}</button></div>
+                    <div ng-if="otherLists.length == 0" class="text-center"><h2 translate>NO_RECORD_FOUND</h2></div>
+                </div><!--tab-content-->
+            </div>
+          </div>
+      </section>
+
+    </div>
+    <!--Main container sec end-->
+    <!--Footer sec start-->
+
+
+    <div id="back-top">
+      <a href="#top">
+          <i class="fa fa-arrow-up"></i>
+      </a>
+    </div>
+    <!--Footer sec end-->
+
+ <!-- sm_modal start-->
+    <div class="modal fade sm_modal modal-center "   id="addListViwe"    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header text-center">
+            <h5 class="modal-title" id="exampleModalLabel" translate>ADD_TO_LIST</h5>
+           
+          </div>
+          <div class="modal-body ">
+            <div class="creatList">
+              <a href="#" translate><i class="fa fa-plus-circle" ></i>CREATE_A_NEW_LIST</a>
+              <div class="creatInputform">
+                <div class="creatInput">
+                  <input type="text" class="form-control" placeholder="Type a Name" ng-model="name" name="name">
+              
+                </div>
+              </div>
+              
+            </div>
+          <div class="text-right">
+             <button class="btn btn-sm btn-primary theme_btn theme_dark"  data-dismiss="modal" aria-label="Close" translate>CANCEL</button>
+            <button class="btn btn-sm btn-primary theme_btn ml5" ng-click="(!createMylistLoader) ? createMylist() : angular.noop() " data-dismiss="modal" translate>DONE</button>
+          </div>
+           
+          </div>
+
+        </div>
+      </div>
+    </div>
+<!-- sm_modal end-->
+
+<!-- sm_modal start-->
+  <div class="modal fade sm_modal modal-center "  id="addList" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h5 class="modal-title" id="exampleModalLabel" translate>ADD_TO_LIST</h5>
+      </div>
+      <div class="modal-body " ng-init="getMylisting()">
+        <div class="creatList">
+          <a  href="javascript:void(0)" id="addListViweBtn" ng-click="addListViews('addListViwe')" data-dismiss="modal" translate><i class="fa fa-plus-circle"></i>CREATE_A_NEW_LIST</a>
+        <div class="widget" ng-repeat="getLists in getList" ng-if="getLists.create_list != 1">
+          <div class="row aItemC">
+              <div class="col-sm-9">
+                <div class="widget_img"><img ng-if="getLists.originalCoverPhoto" ng-src="{{getLists.originalCoverPhoto}}" on-error-src="{{serverPath.no_user_image}}" alt="">
+              <img  ng-if="!getLists.originalCoverPhoto"  ng-src="{{serverPath.no_user_image}}" alt=""/></div>
+              <div class="widget_center">
+                <h2>{{getLists.name}}</h2>
+                <span>{{getLists.total_count}}</span>
+              </div>
+                
+              </div>
+              <div class="col-sm-3">
+                <div class="list_icon text-right">
+                  <a href="javascript:void(0)" ng-click="(!addMylistLoader) ? addMylist(getLists.placesMyListID,$index,placeID) : angular.noop()"><i class="fa fa-plus-circle"></i></a>
+                </div>
+              </div>
+            </div>
+        </div>
+          
+        </div>
+      <div class="text-right">
+         <button class="btn btn-sm btn-primary theme_btn theme_dark"  data-dismiss="modal" aria-label="Close">CANCEL</button>
+        <button class="btn btn-sm btn-primary theme_btn ml5" translate>DONE</button>
+      </div>
+       
+      </div>
+  
+    </div>
+  </div>
+  </div> 
+<!-- sm_modal end-->
+<script>
+  $('#addListBtn').on('click', function () {
+    $('#addList').modal('show').css("z-index","1111"); 
+    $('#addListViweBtn').on('click', function () {
+      $('#addList').modal('hide').css("z-index","1111"); 
+    $('#addListViwe').modal('show').css("z-index","1111"); 
+  });
+
+  });
+</script>
+
+ 
+
+
+
+
+
+
+

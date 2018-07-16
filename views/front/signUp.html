@@ -1,0 +1,50 @@
+<main class="animsition " >
+  <!--Main container sec start-->
+  <div class="main_container  ">
+    <section class="signForm_sec">
+      <div class="container">
+        <div class="formpar text-center">
+          <h1 translate>SIGN_UP_FOR_FREE</h1>
+          <h4 translate>CHOOSE_ONE_OF_THE_FOLLOWING</h4>
+          <ul>
+            <li><a href="#" translate><i class="fa fa-facebook-f"></i>WITH_FACEBOOK</a></li>
+            <li><a href="#" translate><i class="fa fa-google-plus"></i>WITH_GOOGLE</a></li>
+          </ul>
+          <h3 translate>OR_SIGN_UP_USING_YOUR_EMAIL_ADDRESS</h3>
+          <form id="signupform" novalidate ng-submit="registration()" name="signupform">
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Email Address" required ng-model="userEmail" name="userEmail">
+              <span class="error-msgs" ng-show="signupform.userEmail.$dirty && signupform.userEmail.$invalid">
+                  <span ng-show="signupform.userEmail.$error.email" translate>PLEASE_ENTER_VALID_EMAIL</span>
+              </span>
+            </div>
+            <div class="form-group inputIconpar">
+              <input type="{{type}}" prevent-copy-paste  class="form-control" placeholder="Password" name="userPassword" ng-model="userPassword" required>
+              <show-password></show-password>
+              <button class="btn_transparent inputIcon" type="button" ng-click="showPassword()"><span ng-class="(type == 'password' ? 'fa fa-eye' : 'fa fa-eye-slash')"></span></button>
+              <span class="error-msgs" ng-show="signupform.userPassword.$dirty && signupform.userPassword.$invalid">
+                <span ng-show="signupform.userPassword.$error.required" translate>PASSWORD_IS_REQUIRED</span>
+              </span>
+            </div>
+
+            <div class="row ">
+              <div class="col-sm-12 text-left">
+                <div class="checkbox">
+                  <input name="optradio2" type="checkbox" ng-model="term" required>
+                  <label translate>I_AGREE_WITH</label> 
+                </div>
+                <a href="term-condition" target="blank" translate>TERM_CONDITIONS</a>
+               
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block theme_btn" titleBtn="Sign Up" ng-disabled="signupform.$invalid || registrationLoader" disabled="disabled" translate><span ng-if="registrationLoader"><i class="fa fa-circle-o-notch fa-spin" ></i></span>SIGN_UP</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--Main container sec end-->
+</main>
+  

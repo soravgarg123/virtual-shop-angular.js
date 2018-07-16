@@ -1,0 +1,61 @@
+@charset "utf-8";
+/* CSS Document */
+@media (min-width:1200px){
+	
+
+}
+
+
+@media (min-width:992px) and (max-width:1199px){
+	
+	}
+	
+	
+	
+@media (min-width:768px) and (max-width:991px){
+	
+	}
+	
+@media (max-width:1450px){
+.message_sec .headeing {
+    margin-top: 140px;
+    margin-bottom: 60px;
+}
+.message_sec{
+	padding-bottom: 200px;
+}
+
+}	
+
+
+
+@media( max-width: 585px) {
+
+    .wizard {
+        width: 90%;
+        height: auto !important;
+    }
+
+    span.round-tab {
+        font-size: 16px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .wizard .nav-tabs > li a {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left: 35%;
+    }
+}	
+@media (max-width:767px){
+
+
+}	

@@ -1,0 +1,533 @@
+<main class="animsition" ng-init="categoriesList()">
+  <!--Main container sec start-->
+  <div class="main_container  edit_branches">
+    <section class="signForm_sec lable_form">
+      <div class="container">
+        <div class="formpar ">
+          <form id="addPlacesForm" name="addPlacesForm" novalidate ng-submit="addPlacesTest()">
+            <h1 translate>ADD_PLACES_BUSINESS</h1>
+            <div class="form-group">
+              <label class="place_text" translate>CATEGORY<span class="cThem txtStar"></span></label>
+              <select class="form-control" name="categoryID" id="exampleSelect1" ng-model="placeFormData.categoryID" 
+              ng-options="categoriesList.categoryID as categoriesList.categoryName for categoriesList in categoriesLists" required>
+              <option value="" translate>PLEASE_SELECT_CATEGORY</option>
+              </select>
+              <span class="error-msgs" ng-show="addPlacesForm.categoryID.$dirty && addPlacesForm.categoryID.$invalid">
+                <span ng-show="addPlacesForm.categoryID.$error" translate>PLEASE_SELECT_CATEGORY</span> 
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="place_text" translate>PLACES_NAME<span class="cThem txtStar"></span></label>
+              <input type="text" class="form-control" placeholder="Place Name"  ng-model="placeFormData.name" name="name" required>
+              <span class="error-msgs" ng-show="addPlacesForm.name.$dirty && addPlacesForm.name.$invalid">
+                <span ng-show="addPlacesForm.name.$error" translate>PLEASE_ENTER_PLACE_NAME</span> 
+              </span>
+            </div>
+            <div class="radio_box">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="row">
+                    <span translate>SERVICE_TYPE<span class="cThem txtStar"></span> </span>
+                  </div>
+                </div>
+                <div class="col-sm-5">
+                  <div class="row">
+                    <div class="radio">
+                      <input type="radio" ng-model="placeFormData.serviceType" name="serviceType" ng-value="1" required>
+                        <label translate>HOME(PRIVATE)</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="radio">
+                      <input type="radio" ng-model="placeFormData.serviceType" name="serviceType" ng-value="2" required>
+                        <label translate>SHOP_SERVICE</label>
+                    </div>
+                  </div>
+                </div>
+                <span class="error-msgs" ng-show="addPlacesForm.serviceType.$dirty && addPlacesForm.serviceType.$invalid">
+                  <span ng-show="addPlacesForm.serviceType.$error" >PLEASE_CHECKED_SERVICE_TYPE</span> 
+                </span>
+              </div>
+            </div>
+            <div class="radio_box">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="row">
+                    <span translate>STATUS<span class="cThem txtStar"></span> </span>
+                  </div>
+                </div>
+                <div class="col-sm-5">
+                  <div class="row">
+                    <div class="radio">
+                      <input type="radio"  ng-model="placeFormData.orderType" name="orderType" ng-value="1" required>
+                        <label translate>PREORDER_REQUIRED</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="radio">
+                      <input type="radio" ng-model="placeFormData.orderType" name="orderType" ng-value="2" required>
+                        <label translate>ORDER_ANYTIME</label>
+                    </div>
+                  </div>
+                </div>
+                <span class="error-msgs" ng-show="addPlacesForm.orderType.$dirty && addPlacesForm.orderType.$invalid">
+                  <span ng-show="addPlacesForm.orderType.$error" translate>PLEASE_CHECKED_ORDER_TYPE</span> 
+                </span>
+              </div>
+            </div>
+            <div class="radio_box box3">
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="row">
+                    <span translate>PRICE<span class="cThem txtStar"></span> </span>
+                  </div>
+                </div>
+                <div class="col-sm-9">
+                  <div class="row">
+                    <ul>
+                      <li>
+                        <div class="radio">
+                          <input type="radio" ng-model="placeFormData.price" name="price" ng-value="1" required>
+                            <label translate>CHEAP</label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="radio">
+                          <input type="radio" ng-model="placeFormData.price" name="price" ng-value="2" required>
+                            <label translate>MODERATE</label>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="radio">
+                          <input type="radio" ng-model="placeFormData.price" name="price" ng-value="3" required>
+                          <label translate>EXPENCIVE</label>
+                        </div>
+                      </li>
+                      <span class="error-msgs" ng-show="addPlacesForm.price.$dirty && addPlacesForm.price.$invalid">
+                        <span ng-show="addPlacesForm.price.$error" translate>PLEASE_CHECKED_PRICE</span> 
+                      </span>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="place_text" translate>ADD_TAGS</label>
+              <!-- <input type="text" class="form-control" placeholder="Add Tags" ng-model="placeFormData.addTags" name="addTags" > -->
+              <tag-input taglist='placeFormData.addTags' >
+                
+              </tag-input>
+              
+
+
+            </div>
+            <div class="form-group">
+              <label class="place_text" translate>PHONE/LANDLINE</label>
+              <input type="text" class="form-control" placeholder="Phone Number/ Landline Number" ng-model="placeFormData.phoneNo" name="phoneNo"  ng-pattern="/^\+?\d{10}$/">
+              <span class="error-msgs" ng-show="addPlacesForm.phoneNo.$dirty && addPlacesForm.phoneNo.$invalid">
+                <span ng-show="addPlacesForm.phoneNo.$error" translate>PLEASE_ENTER_CORRECT_PHONE_LANDLINE</span> 
+              </span>
+
+            </div>
+
+            <div class="form-group">
+              <label class="place_text" translate>WHATSAPP_NUMBER</label>
+              <input type="text" class="form-control" placeholder="What’s app Number" ng-model="placeFormData.whatsAppNo" name="whatsAppNo"  ng-pattern="/^\+?\d{10}$/">
+              <span class="error-msgs" ng-show="addPlacesForm.whatsAppNo.$dirty && addPlacesForm.whatsAppNo.$invalid">
+                <span ng-show="addPlacesForm.whatsAppNo.$error" translate>PLEASE_ENTER_CORRECT_WHATSAPP_NUMBER</span> 
+              </span>
+            </div>
+
+            <div class="form-group">
+              <label class="place_text" translate>EMAIL<span class="cThem txtStar" >*</span></label>
+              <input type="email" class="form-control" placeholder="Email" ng-model="placeFormData.email" name="email" required>
+              <span class="error-msgs" ng-show="addPlacesForm.email.$dirty && addPlacesForm.email.$invalid">
+                <span ng-show="addPlacesForm.email.$error.email" translate>PLEASE_ENTER_EMAIL</span> 
+              </span>
+            </div>
+            <div class="form-group ">
+              <label class="place_text" translate>LOCATION<span class="cThem txtStar">*</span></label>
+              <div class="inputIcon">
+                <input type="text" class="form-control" placeholder="Location" gm-places-autocomplete ng-model="autocomplete_1" name="locations" id="locations_{{::count}}" ng-keyup="getElementId($event)" required>
+                <i class="fa fa-map"></i>
+                <span class="error-msgs" ng-show="addPlacesForm.locations.$dirty && addPlacesForm.locations.$invalid">
+                <span ng-show="addPlacesForm.locations.$error" translate>PLEASE_ENTER_LOCATION</span> 
+                </span>
+                <span id="moreLocations"></span>
+                <div class="addMoreBtn text-right">
+                  <a href="javascript:void(0)" ng-click="addMoreLocation ? addLocation(count) : angular.noop()" ng-disabled="!addMoreLocation" ng-if="count < 5" translate>ADD_MORE_LOCATION</a>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="place_text" translate>ADD_FACEBOOK_URL</label>
+              <input type="text" class="form-control" placeholder="Add facebook url" ng-model="placeFormData.facebookURL" name="facebookURL">
+            </div>  
+
+            <div class="form-group">
+              <label class="place_text" translate>ADD_TWITTER_URL</label>
+              <input type="text" class="form-control" placeholder="Add twitter url" ng-model="placeFormData.twitterURL" name="twitterURL">
+            </div>
+           <div class="form-group">
+              <div class="head">
+                <ul class="list-inline">
+                  <li class="list-inline-item"><h4 translate>WORKING_HOURS</h4></li>
+                  <li class="list-inline-item pull-right text-right"><button class="btn_transparent" id="time_list_btn" ng-click="toggleDays()"><i class="fa fa-angle-down"></i></button></li>
+                </ul>
+              </div>
+              
+              <div class="time_list" id="time_list" ng-show="workingdays">
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <div class="checkbox lgCheckbox">
+                      <input type="checkbox" ng-model="placeFormData.isOpenForAllDays" name="isOpenForAllDays" ng-true-value="1" ng-false-value="0">
+                        <label></label>
+                    </div>
+                    <span translate>ALL_DAYS</span>
+                  </li>
+                  
+                  <li class="list-inline-item" ng-if="placeFormData.isOpenForAllDays == 1">
+                    <div class="inputIcon" moment-picker="placeFormData.starttimepicker" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" name = "starttime"  ng-model="placeFormData.starttimepicker" ng-model-options="{ updateOn: 'blur' }" required>
+                    </div>
+                  </li>
+                  <li class="list-inline-item" ng-if="placeFormData.isOpenForAllDays == 1">
+                    <div class="inputIcon" moment-picker="placeFormData.endtimepicker" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time"  ng-model="placeFormData.endtimepicker" ng-model-options="{ updateOn: 'blur' }" required>
+                    </div>
+                  </li>
+                  
+                  
+                  <li class="list-inline-item">
+                    <!-- <label class="switch pull-right">
+                      <input type="checkbox">
+                      <span class="slider round"></span>
+                    </label> -->
+                  </li>
+                </ul>
+                <span class="error-msgs" id="starttimepicker" style="display: none;" ng-show="placeFormData.isOpenForAllDays == 1">
+                  <span translate>END_TIME_SHOULD_BE_GREATER</span> 
+                </span>
+                <ul class="list-inline flexItem" ng-if="placeFormData.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span translate>MONDAY</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.mondayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="placeFormData.mondayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.mondayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="placeFormData.mondayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="placeFormData.isMondayOn" name="isMondayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isMondayOn" style="display: none;" ng-show="placeFormData.isMondayOn == 1">
+                    <span translate>END_TIME_SHOULD_BE_GREATER</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="placeFormData.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span translate>TUESDAY</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.tuesdayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="placeFormData.tuesdayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.tuesdayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="placeFormData.tuesdayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="placeFormData.isTuesdayOn" name="isTuesdayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isTuesdayOn" style="display: none;" ng-show="placeFormData.isTuesdayOn == 1">
+                    <span translate>END_TIME_SHOULD_BE_GREATER</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="placeFormData.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span translate>WEDNESDAY</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.wenesdayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="placeFormData.wenesdayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.wenesdayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="placeFormData.wenesdayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="placeFormData.isWenesdayOn" name="isWenesdayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isWenesdayOn" style="display: none;" ng-show="placeFormData.isWenesdayOn == 1">
+                    <span translate>END_TIME_SHOULD_BE_GREATER</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="placeFormData.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span translate>THUSDAY</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.thursdayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="placeFormData.thursdayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.thursdayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="placeFormData.thursdayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="placeFormData.isThursdayOn" name="isThursdayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isThursdayOn" style="display: none;" ng-show="placeFormData.isThursdayOn == 1">
+                    <span translate>END_TIME_SHOULD_BE_GREATER</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="placeFormData.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span translate>FRIDAY</span>
+                  </li>
+                  <li class="list-inline-item">
+                      <div class="inputIcon" moment-picker="placeFormData.fridayStartTime" format="HH:mm">
+                        <i class="fa fa-clock-o"></i>
+                        <input type="text" class="form-control" placeholder="Start Time" ng-model="placeFormData.fridayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                      </div>
+                  </li>
+
+                  <li class="list-inline-item">
+                      <div class="inputIcon" moment-picker="placeFormData.fridayEndTime" format="HH:mm">
+                        <i class="fa fa-clock-o"></i>
+                        <input type="text" class="form-control" placeholder="End Time" ng-model="placeFormData.fridayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                      </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="placeFormData.isFridayOn" name="isFridayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isFridayOn" style="display: none;" ng-show="placeFormData.isFridayOn == 1">
+                    <span translate>END_TIME_SHOULD_BE_GREATER</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem"  ng-if="placeFormData.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span translate>SATURDAY</span>
+                  </li>
+                  <li class="list-inline-item">
+                      <div class="inputIcon" moment-picker="placeFormData.saturdayStartTime" format="HH:mm">
+                        <i class="fa fa-clock-o"></i>
+                        <input type="text" class="form-control" placeholder="Start Time" ng-model="placeFormData.saturdayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                      </div>
+                  </li>
+
+                  <li class="list-inline-item">
+                      <div class="inputIcon" moment-picker="placeFormData.saturdayEndTime" format="HH:mm">
+                        <i class="fa fa-clock-o"></i>
+                        <input type="text" class="form-control" placeholder="End Time" ng-model="placeFormData.saturdayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                      </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="placeFormData.isSaturdayOn" name="isSaturdayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isSaturdayOn" style="display: none;" ng-show="placeFormData.isSaturdayOn == 1">
+                    <span translate>END_TIME_SHOULD_BE_GREATER</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="placeFormData.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span translate>SUNDAY</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.sundayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="placeFormData.sundayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="placeFormData.sundayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="placeFormData.sundayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="placeFormData.isSundayOn" name="isSundayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isSundayOn" style="display: none;" ng-show="placeFormData.isSundayOn == 1">
+                    <span translate>END_TIME_SHOULD_BE_GREATER</span> 
+                  </span>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group bt1 ">
+              <div class="row">
+                <div class="col-sm-6"><h4 translate>PLACE_COVER_PHOTO<span class="cThem txtStar" >*</span></h4></div>
+                <div class="col-sm-6 text-right"><button type="button" class=" btn-default  btn" ng-click="coverPhoto('coverPhoto')" translate>ADD_PHOTO</button>
+                <input type="file" name="coverPhoto" id="coverPhoto" ng-model="image" style="display: none;" filepreview="filepreview" fileinput="file" valid-file file-model = "myFile">
+                <span class="error-msgs" ng-show="addPlacesForm.coverPhoto.$dirty && addPlacesForm.coverPhoto.$invalid">
+                  <span ng-show="addPlacesForm.coverPhoto.$error.validFile" translate>COVER_PHOTO_IS_REQUIRED</span> 
+                </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="cover_img">
+              <img ng-src="{{filepreview}}" class="img-responsive" ng-show="filepreview"/>
+            </div>
+
+            <div class="form-group">
+              <div class=""><h4 translate>ADD_PHOTO</h4><span class="" translate>PLEASE_SELECT_ATLEAST_ONE_PHOTO</span></div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="cover_img">
+                    <div class="edit_button_img">
+                      <button type="button" class="btn_transparent" ng-click="coverPhoto('coverPhoto1')"> <i class=" fa fa fa-plus" ng-show="!filepreview1"></i> <img ng-src="{{filepreview1}}" class="img-responsive" ng-show="filepreview1"/><h3 ng-show="!filepreview1" translate>ADD_PHOTO</h3></button>
+                      <input type="file" name="coverPhoto1" id="coverPhoto1" file-model = "myFile" style="display: none;" filepreview1="filepreview1" fileinput="file">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="cover_img">
+                    
+                    <div class="edit_button_img">
+                      <button type="button" class="btn_transparent" ng-click="coverPhoto('coverPhoto2')"><img ng-src="{{filepreview2}}" class="img-responsive" ng-show="filepreview2"/> <i ng-if="!filepreview2" class=" fa fa fa-plus"></i> <h3 ng-if="!filepreview2" translate>ADD_PHOTO</h3></button>
+                      <input type="file" name="coverPhoto2" id="coverPhoto2" file-model = "myFile" style="display: none;" filepreview2="filepreview2" fileinput="file">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="cover_img">
+                    <div class="edit_button_img">
+                      <button type="button" class="btn_transparent" ng-click="coverPhoto('coverPhoto3')"><img ng-src="{{filepreview3}}" class="img-responsive" ng-show="filepreview3"/> <i ng-if="!filepreview3" class=" fa fa fa-plus"></i> <h3 ng-if="!filepreview3" translate>ADD_PHOTO</h3></button>
+                      <input type="file" name="coverPhoto3" id="coverPhoto3" file-model = "myFile" style="display: none;" filepreview3="filepreview3" fileinput="file">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="cover_img">
+                   
+                    <div class="edit_button_img">
+                      <button type="button" class="btn_transparent" ng-click="coverPhoto('coverPhoto4')"><img ng-src="{{filepreview4}}" class="img-responsive" ng-show="filepreview4"/> <i ng-if="!filepreview4" class=" fa fa fa-plus"></i> <h3 ng-if="!filepreview4" translate>ADD_PHOTO</h3></button>
+                      <input type="file" name="coverPhoto4" id="coverPhoto4" file-model = "myFile" style="display: none;" filepreview4="filepreview4" fileinput="file">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="cover_img">
+                    <div class="edit_button_img">
+                      <button type="button" class="btn_transparent" ng-click="coverPhoto('coverPhoto5')" > <img ng-src="{{filepreview5}}" class="img-responsive" ng-show="filepreview5"/><i class=" fa fa fa-plus" ng-if="!filepreview5"></i> <h3 ng-if="!filepreview5" translate>ADD_PHOTO</h3></button>
+                      <input type="file" name="coverPhoto5" id="coverPhoto5" file-model = "myFile" style="display: none;" filepreview5="filepreview5" fileinput="file">
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" rows="5" placeholder="Service Description "  ng-model="placeFormData.descprition" name="descprition" maxlength="160" name="descprition" required></textarea>
+              
+              <span>{{ 160  - placeFormData.descprition.length}} remaining</span>
+              <span class="error-msgs" ng-show="addPlacesForm.descprition.$dirty && addPlacesForm.descprition.$invalid">
+                <span ng-show="addPlacesForm.descprition.$error">Please enter description.</span> 
+              </span>
+            
+            </div>
+
+            <div class="form-group noteTxt">
+             <p> <b>Note:</b> Fields with (*) sign are mandatory to fill</p>
+            </div>
+               
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn_them_md theme_btn"  ng-disabled="addPlacesForm.$invalid || addPlaceLoader || !addPhoto || addTime" disabled="disabled" translate><span ng-if="addPlaceLoader"><i class="fa fa-circle-o-notch fa-spin" ></i></span>SAVE</button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+    <!--Main container sec end-->
+</main>
+<style type="text/css">
+    .tag-input-ctn {
+
+}
+.tag-input-ctn input {
+border: 1px solid #a9b6d2;
+    border-radius: 30px;
+    padding: 7px 15px;
+    width: 100% !important;
+    height: 45px;
+
+}
+.tag-input-ctn input:focus {
+  outline: 0;
+  box-shadow: 0px;
+}
+.tag-input-ctn .input-tag {
+  padding: 2px 4px;
+  line-height: 12px;
+  font-size: 11px;
+  background-color: #e3eaf6;
+  display: inline-block;
+  float: left;
+  border-radius: 2px;
+  margin: 2px 5px 2px 0px;
+ 
+}
+.tag-input-ctn .input-tag .delete-tag {
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0px 2px;
+}
+.tag-input-ctn .input-tag .delete-tag:hover {
+  background-color: #96b4d2;
+}
+
+  </style>

@@ -1,0 +1,97 @@
+<div id="content" ng-controller="gameCtrl" ng-init="initGameDetails()">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="/admin/manage-games" class="current">Games</a> </div>
+    <h1>Game Details</h1>
+  </div>
+  <div class="container-fluid">
+    <hr>
+    <a href="javascript:void(0)" class="btn btn-primary pull-right" ng-click="goBack();">Back</a>
+    <center>
+      <span style="color:red" ng-if="errorMessage">{{ errorMessage }}</span>
+      <span style="color:green" ng-if="successMessage">{{ successMessage }}</span>
+      <div style="margin-top:10px;" class="loadersmall" ng-if="isLoading"></div>
+    </center>
+    <div class="row-fluid">
+      <div class="span12">
+        <h4><strong>Game Basic Details</strong></h4>
+        <div class="widget-box">
+          <div class="widget-content nopadding">
+            <table class="table table-striped table-bordered">
+              <tbody>
+                <tr>
+                  <td><strong>Presenter Name</strong></td>
+                  <td>{{records.presenterName}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Game DateTime</strong></td>
+                  <td>{{records.gameDateTime| date:'dd-MMMM-yyyy, hh:mm:ss a'}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Game Created DateTime</strong></td>
+                  <td>{{records.gameCreatedDate| date:'dd-MMMM-yyyy, hh:mm:ss a'}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Game End DateTime</strong></td>
+                  <td>{{records.gameEndDateTime| date:'dd-MMMM-yyyy, hh:mm:ss a'}}</td>
+                </tr>
+                <tr>
+                  <td><strong>No Of Participants</strong></td>
+                  <td>{{records.noOfParticipants}}</td>
+                </tr>
+                <tr>
+                  <td><strong>No Of Winners</strong></td>
+                  <td>{{records.noOfWinners}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Winner Amount (Per User)</strong></td>
+                  <td>${{records.winnerAmount}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Prize Money</strong></td>
+                  <td>${{records.gamePrizeMoney}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Is Game Started</strong></td>
+                  <td>
+                    <div ng-if="records.isGameStarted == 0">
+                      No
+                    </div>
+                    <div ng-if="records.isGameStarted == 1">
+                      Yes
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <h4><strong>Game Questions Details</strong></h4>
+
+        <div class="widget-box" ng-repeat="Q in records.gameQuestions">
+          <div class="widget-content nopadding">
+            <table class="table table-striped table-bordered">
+              <tbody>
+                <tr>
+                  <td><strong>Question {{$index + 1}}</strong></td>
+                  <td>{{Q.gameQuestion}}</td>
+                </tr>
+                <tr ng-repeat="A in Q.gameOptions">
+                  <td><strong>Options {{$index + 1}}</strong></td>
+                  <td>
+                    <div ng-if="A.isCorrect == 0">
+                      {{A.optionTitle}}
+                    </div>
+                    <div ng-if="A.isCorrect == 1" style="color:green;" title="Correct Answer">
+                      {{A.optionTitle}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

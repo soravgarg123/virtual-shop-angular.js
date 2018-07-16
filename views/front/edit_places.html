@@ -1,0 +1,554 @@
+<main class="animsition " ng-init="editPlace();categoriesList();">
+<div class="main_container  edit_branches">
+    <section class="signForm_sec lable_form">
+      <div class="container">
+          <div class="formpar ">
+          <form id="editPlacesForm" name="editPlacesForm" novalidate ng-submit="editPlacesTest()">
+            <h1>Edit Places</h1>
+            <div class="form-group">
+              <label class="place_text">Category <span class="cThem txtStar">*</span></label>
+                <select class="form-control" id="exampleSelect1" ng-model="editPlaceForm.categoryID" 
+              ng-options="categoriesList.categoryID as categoriesList.categoryName for categoriesList in categoriesLists" required >
+                   
+                    <option value="">Please select category</option>
+                 <!--    <option>Pastries </option>
+                    <option>Desserts </option>
+                    <option>Caterings </option> -->
+                </select>
+
+                <span class="error-msgs" ng-show="editPlacesForm.categoryID.$dirty && editPlacesForm.categoryID.$invalid">
+                <span ng-show="editPlacesForm.categoryID.$error">Please select category.</span> 
+              </span>
+              </div>
+
+            <div class="form-group">
+              <label class="place_text">Place Name  <span class="cThem txtStar">*</span></label>
+              <input type="text" class="form-control" ng-model="editPlaceForm.name"  name="name" required>
+              <span class="error-msgs" ng-show="editPlacesForm.name.$dirty && editPlacesForm.name.$invalid">
+                <span ng-show="editPlacesForm.name.$error">Please enter place name.</span> 
+              </span>
+            </div>
+
+              <div class="radio_box">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="row">
+                        <span>Service Type <span class="cThem txtStar">*</span> </span>
+                      </div>
+                      
+                    </div>
+
+                     <div class="col-sm-5">
+                      <div class="row">
+                      <div class="radio">
+                          <input name="optradio1" type="radio" ng-model="editPlaceForm.serviceType" name="serviceType" ng-value="1" required>
+                            <label>Home(Private)  </label>
+                        </div>
+                      </div>
+                    </div>
+
+                     <div class="col-sm-4">
+                      <div class="row">
+                      <div class="radio">
+                          <input name="optradio1" type="radio" ng-model="editPlaceForm.serviceType" name="serviceType" ng-value="2" required>
+                            <label>Shop & Service </label>
+                        </div>
+                      </div>
+                    </div>
+                    <span class="error-msgs" ng-show="editPlacesForm.serviceType.$dirty && editPlacesForm.serviceType.$invalid">
+                  <span ng-show="editPlacesForm.serviceType.$error">Please checked service type.</span> 
+                </span>
+                  </div>
+                 
+              </div>
+
+
+              <div class="radio_box">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="row">
+                        <span>Status <span class="cThem txtStar">*</span> </span>
+                      </div>
+                      
+                    </div>
+
+                     <div class="col-sm-5">
+                      <div class="row">
+                      <div class="radio">
+                          <input name="optradio2" type="radio" ng-model="editPlaceForm.orderType" name="orderType" ng-value="1" required>
+                            <label>Preorder required  </label>
+                        </div>
+                      </div>
+                    </div>
+
+                     <div class="col-sm-4">
+                      <div class="row">
+                      <div class="radio">
+                          <input name="optradio2" type="radio" ng-model="editPlaceForm.orderType" name="orderType" ng-value="2" required>
+                            <label>Order Anytime </label>
+                        </div>
+                      </div>
+                    </div>
+                    <span class="error-msgs" ng-show="editPlacesForm.orderType.$dirty && editPlacesForm.orderType.$invalid">
+                  <span ng-show="editPlacesForm.orderType.$error">Please checked order type.</span> 
+                </span>
+                  </div>
+                 
+              </div>
+
+
+              <div class="radio_box box3">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="row">
+                        <span>Price<span class="cThem txtStar">*</span> </span>
+                      </div>
+                      
+                    </div>
+
+                     <div class="col-sm-9">
+                      <div class="row">
+                        <ul>
+                          <li>
+                            <div class="radio">
+                          <input name="optradio3" type="radio" ng-model="editPlaceForm.price" name="price" ng-value="1" required>
+                            <label>Cheap  </label>
+                        </div>
+                      </li>
+
+                        <li>
+                          <div class="radio">
+                          <input name="optradio3" type="radio" ng-model="editPlaceForm.price" name="price" ng-value="2" required>
+                            <label>Expensive  </label>
+                        </div>
+                      </li>
+
+
+                        <li>
+                          <div class="radio">
+                          <input name="optradio3" type="radio" ng-model="editPlaceForm.price" name="price" ng-value="3" required>
+                            <label>Order Anytime  </label>
+
+                        </div>
+                      </li>
+                      <span class="error-msgs" ng-show="editPlacesForm.price.$dirty && editPlacesForm.price.$invalid">
+                        <span ng-show="editPlacesForm.price.$error">Please checked price.</span> 
+                      </span>
+                        </ul>
+
+                      </div>
+                    </div>
+                    
+                  </div>
+                 
+              </div>
+
+
+
+            <div class="form-group">
+               <label class="place_text">Add Tags </label>
+              <!-- <input type="text" class="form-control" ng-model="editPlaceForm.placesTags"  name="placesTags" required> -->
+              <tag-input taglist='editPlaceForm.addTags'>
+              <!-- ngRepeat: tag in tagArray() track by $index  -->
+              </tag-input>
+            </div>
+
+
+            <div class="form-group">
+              <label class="place_text">Phone Number/ Landline Number </label>
+              <input type="text" class="form-control" ng-model="editPlaceForm.phoneNo"  name="phoneNo" ng-pattern="/^\+?\d{10}$/" required>
+              <span class="error-msgs" ng-show="editPlacesForm.phoneNo.$dirty && editPlacesForm.phoneNo.$invalid">
+                <span ng-show="editPlacesForm.phoneNo.$error">Please enter correct Phone Number/ Landline Number.</span> 
+              </span>
+            </div>
+
+            <div class="form-group">
+               <label class="place_text">What’s app Number</label>
+              <input type="text" class="form-control" ng-model="editPlaceForm.whatsAppNo"  name="whatsAppNo"  ng-pattern="/^\+?\d{10}$/" required>
+              <span class="error-msgs" ng-show="editPlacesForm.whatsAppNo.$dirty && editPlacesForm.whatsAppNo.$invalid">
+                <span ng-show="editPlacesForm.whatsAppNo.$error">Please enter correct What’s app Number.</span> 
+            </div>
+
+
+            <div class="form-group">
+              <label class="place_text">Email <span class="cThem txtStar">*</span></label>
+              <input type="email" class="form-control" ng-model="editPlaceForm.email"  name="email" required>
+               <span class="error-msgs" ng-show="editPlacesForm.email.$dirty && editPlacesForm.email.$invalid">
+                <span ng-show="editPlacesForm.email.$error.email">Please enter email.</span> 
+              </span>
+            </div>
+
+            <div class="form-group ">
+              <label class="place_text">Location  <span class="cThem txtStar">*</span></label>
+              <div class="inputIcon" ng-repeat="detail in editPlaceForm.placesLocation">
+                <input type="text" class="form-control" ng-model="detail.location"  gm-place-autocomplete ng-model="autocomplete_1" name="locations" id="locations_{{::count}}" ng-keyup="getElementId1($event)" required>
+              <i class="fa fa-map"></i>
+              <span class="error-msgs" ng-show="editPlacesForm.locations.$dirty && editPlacesForm.locations.$invalid">
+                <span ng-show="editPlacesForm.locations.$error">Please enter location.</span> 
+                </span>
+                <span id="moreLocations"></span>
+                <div class="addMoreBtn text-right">
+                  <a href="javascript:void(0)" ng-click="addMoreLocation ? addEdLocation(count) : angular.noop()" ng-disabled="!addMoreLocation" ng-if="count < 5">Add more location</a>
+                </div>
+              </div>
+              
+            </div>
+           <div class="form-group">
+              <div class="head">
+                <ul class="list-inline">
+                  <li class="list-inline-item"><h4>Working Hours</h4></li>
+                  <li class="list-inline-item pull-right text-right"><button class="btn_transparent" id="time_list_btn" ng-click="toggleDays()"><i class="fa fa-angle-down"></i></button></li>
+                </ul>
+              </div>
+              
+              <div class="time_list" id="time_list" ng-show="workingdays">
+                <ul class="list-inline">
+                  <li class="list-inline-item">
+                    <div class="checkbox lgCheckbox">
+                      <input type="checkbox" ng-model="editPlaceForm.isOpenForAllDays" name="isOpenForAllDays" ng-true-value="1" ng-false-value="0">
+                        <label></label>
+                    </div>
+                    <span>All Days</span>
+                  </li>
+                  
+                  <li class="list-inline-item" ng-if="editPlaceForm.isOpenForAllDays == 1">
+                    <div class="inputIcon" moment-picker="editPlaceForm.starttimepicker" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" name = "starttime"  ng-model="editPlaceForm.starttimepicker" ng-model-options="{ updateOn: 'blur' }" required>
+                    </div>
+                  </li>
+                  <li class="list-inline-item" ng-if="editPlaceForm.isOpenForAllDays == 1">
+                    <div class="inputIcon" moment-picker="editPlaceForm.endtimepicker" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time"  ng-model="editPlaceForm.endtimepicker" ng-model-options="{ updateOn: 'blur' }" required>
+                    </div>
+                  </li>
+                  
+                  
+                  <li class="list-inline-item">
+                    <!-- <label class="switch pull-right">
+                      <input type="checkbox">
+                      <span class="slider round"></span>
+                    </label> -->
+                  </li>
+                </ul>
+                <span class="error-msgs" id="starttimepicker" style="display: none;" ng-show="editPlaceForm.isOpenForAllDays == 1">
+                  <span >End Time should be greater.</span> 
+                </span>
+                <ul class="list-inline flexItem" ng-if="editPlaceForm.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span>Monday</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.mondayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="editPlaceForm.mondayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.mondayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="editPlaceForm.mondayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="editPlaceForm.isMondayOn" name="isMondayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isMondayOn" style="display: none;" ng-show="editPlaceForm.isMondayOn == 1">
+                    <span >End Time should be greater.</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="editPlaceForm.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span>Tuesday</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.tuesdayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="editPlaceForm.tuesdayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.tuesdayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="editPlaceForm.tuesdayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="editPlaceForm.isTuesdayOn" name="isTuesdayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isTuesdayOn" style="display: none;" ng-show="editPlaceForm.isTuesdayOn == 1">
+                    <span >End Time should be greater.</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="editPlaceForm.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span>Wednesday</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.wenesdayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="editPlaceForm.wenesdayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.wenesdayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="editPlaceForm.wenesdayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="editPlaceForm.isWenesdayOn" name="isWenesdayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isWenesdayOn" style="display: none;" ng-show="editPlaceForm.isWenesdayOn == 1">
+                    <span >End Time should be greater.</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="editPlaceForm.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span>Thusday</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.thursdayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="editPlaceForm.thursdayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.thursdayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="editPlaceForm.thursdayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="editPlaceForm.isThursdayOn" name="isThursdayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isThursdayOn" style="display: none;" ng-show="editPlaceForm.isThursdayOn == 1">
+                    <span >End Time should be greater.</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="editPlaceForm.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span>Friday</span>
+                  </li>
+                  <li class="list-inline-item">
+                      <div class="inputIcon" moment-picker="editPlaceForm.fridayStartTime" format="HH:mm">
+                        <i class="fa fa-clock-o"></i>
+                        <input type="text" class="form-control" placeholder="Start Time" ng-model="editPlaceForm.fridayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                      </div>
+                  </li>
+
+                  <li class="list-inline-item">
+                      <div class="inputIcon" moment-picker="editPlaceForm.fridayEndTime" format="HH:mm">
+                        <i class="fa fa-clock-o"></i>
+                        <input type="text" class="form-control" placeholder="End Time" ng-model="editPlaceForm.fridayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                      </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="editPlaceForm.isFridayOn" name="isFridayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isFridayOn" style="display: none;" ng-show="editPlaceForm.isFridayOn == 1">
+                    <span >End Time should be greater.</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem"  ng-if="editPlaceForm.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span>Saturday</span>
+                  </li>
+                  <li class="list-inline-item">
+                      <div class="inputIcon" moment-picker="editPlaceForm.saturdayStartTime" format="HH:mm">
+                        <i class="fa fa-clock-o"></i>
+                        <input type="text" class="form-control" placeholder="Start Time" ng-model="editPlaceForm.saturdayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                      </div>
+                  </li>
+
+                  <li class="list-inline-item">
+                      <div class="inputIcon" moment-picker="editPlaceForm.saturdayEndTime" format="HH:mm">
+                        <i class="fa fa-clock-o"></i>
+                        <input type="text" class="form-control" placeholder="End Time" ng-model="editPlaceForm.saturdayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                      </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="editPlaceForm.isSaturdayOn" name="isSaturdayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isSaturdayOn" style="display: none;" ng-show="editPlaceForm.isSaturdayOn == 1">
+                    <span >End Time should be greater.</span> 
+                  </span>
+                </ul>
+                <ul class="list-inline flexItem" ng-if="editPlaceForm.isOpenForAllDays != 1">
+                  <li class="list-inline-item">
+                    <span>Sunday</span>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.sundayStartTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="Start Time" ng-model="editPlaceForm.sundayStartTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <div class="inputIcon" moment-picker="editPlaceForm.sundayEndTime" format="HH:mm">
+                      <i class="fa fa-clock-o"></i>
+                      <input type="text" class="form-control" placeholder="End Time" ng-model="editPlaceForm.sundayEndTime" ng-model-options="{ updateOn: 'blur' }">
+                    </div>
+                  </li>
+                  <li class="list-inline-item">
+                    <label class="switch pull-right">
+                      <input type="checkbox" ng-model="editPlaceForm.isSundayOn" name="isSundayOn" ng-true-value="1" ng-false-value="0">
+                      <span class="slider round"></span>
+                    </label>
+                  </li>
+                  <span class="error-msgs" id="isSundayOn" style="display: none;" ng-show="editPlaceForm.isSundayOn == 1">
+                    <span >End Time should be greater.</span> 
+                  </span>
+                </ul>
+              </div>
+            </div>
+           <div class="form-group">
+              <h4>Cover Photo</h4>
+            
+           </div>
+
+            <div class="form-group bt1 ">
+              <div class="row">
+                <div class="col-sm-6"><h4>Place Cover Photo <span class="cThem txtStar" >*</span></h4></div>
+                <div class="col-sm-6 text-right"><button type="button" class=" btn-default  btn" ng-click="coverEditPhoto('coverEditPhoto')">Add Photo</button>
+                <input type="file" name="coverEditPhoto" id="coverEditPhoto" ng-model="image" style="display: none;" filepreview="filepreview" fileinput1="file" valid-file file-model1 = "myFile">
+                <span class="error-msgs" ng-show="editPlacesForm.coverEditPhoto.$dirty && editPlacesForm.coverEditPhoto.$invalid">
+                  <span ng-show="editPlacesForm.coverEditPhoto.$error.validFile">Cover photo is required.</span> 
+                </span>
+                </div>
+
+              </div>
+            </div>
+            <div class="cover_img">
+              <img ng-if="filepreview" ng-src="{{filepreview}}" class="img-responsive" />
+              <img ng-if="!filepreview" ng-src="{{editPlaceForm.originalCoverPhoto}}" class="img-responsive" />
+            </div>
+
+
+            <div class="form-group">
+              <h4>Add Photo</h4>
+            </div>
+            <div >
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="cover_img" >
+                  <img ng-if="filepreview1" ng-src="{{filepreview1}}" class="img-responsive" >
+                  <img ng-if="!filepreview1" ng-src="{{editPlaceForm.placesPhotos[0].originalPhoto}}" class="img-responsive" >
+                  <div class="edit_button">
+                    <button type="button"   ng-click="coverEditPhoto('coverEditPhoto1')" class="btn_transparent"> <i class=" fa fa-pencil"></i></button>
+                    <input type="file" name="coverEditPhoto1" id="coverEditPhoto1" file-model1 = "myFile" style="display: none;" filepreview1="filepreview1" fileinput1="file">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="cover_img" >
+                  <img ng-if="filepreview2" ng-src="{{filepreview2}}" class="img-responsive" >
+                  <img ng-if="!filepreview2" ng-src="{{editPlaceForm.placesPhotos[1].originalPhoto}}" class="img-responsive" > 
+                  <div class="edit_button">
+                    <button type="button"   ng-click="coverEditPhoto('coverEditPhoto2')" class="btn_transparent"> <i class=" fa fa-pencil"></i></button>
+                    <input type="file" name="coverEditPhoto2" id="coverEditPhoto2" file-model1 = "myFile" style="display: none;" filepreview2="filepreview2" fileinput1="file">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="cover_img" >
+                  <img ng-if="filepreview3" ng-src="{{filepreview3}}" class="img-responsive" >
+                  <img ng-if="!filepreview3" ng-src="{{editPlaceForm.placesPhotos[2].originalPhoto}}" class="img-responsive">
+                  <div class="edit_button" >
+                    <button type="button"   ng-click="coverEditPhoto('coverEditPhoto3')" class="btn_transparent"> <i class=" fa fa-pencil"></i></button>
+                    <input type="file" name="coverEditPhoto3" id="coverEditPhoto3" file-model1 = "myFile" style="display: none;" filepreview3="filepreview3" fileinput1="file">
+                  </div>
+                </div>
+              </div>
+             
+            </div>
+            </div>
+            
+
+            <div class="form-group">
+              <textarea class="form-control" maxlength="160" rows="5" ng-model="editPlaceForm.descprition"  name="descprition" required>
+              </textarea>
+              <span>{{ 160  - editPlaceForm.descprition.length}} remaining</span>
+               <span class="error-msgs" ng-show="editPlacesForm.descprition.$dirty && editPlacesForm.descprition.$invalid">
+                <span ng-show="editPlacesForm.descprition.$error">Please enter description.</span> 
+              </span>
+            </div>         
+            <div class="form-group">
+               <button type="submit" class="btn btn-primary btn_them_md theme_btn"  ng-disabled="updatePlaceLoader" ><span ng-if="updatePlaceLoader"><i class="fa fa-circle-o-notch fa-spin" ></i></span>Save</button>
+            </div>
+
+            
+</form>
+          </div>
+      </div>
+    </section>
+    </div>
+  </main>
+<style type="text/css">
+    .tag-input-ctn {
+  border: 1px solid #ccc;
+  padding: 2px 3px;
+  display: inline-block;
+  width: 500px;
+  border-radius: 3px;
+  box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075);
+}
+.tag-input-ctn input {
+  display: inline-block;
+  float: left;
+  height: 18px;
+  padding: 0px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #000;
+  border: 0px;
+  margin: 2px;
+}
+.tag-input-ctn input:focus {
+  outline: 0;
+  box-shadow: 0px;
+}
+.tag-input-ctn .input-tag {
+  padding: 2px 4px;
+  line-height: 12px;
+  font-size: 11px;
+  background-color: #e3eaf6;
+  display: inline-block;
+  float: left;
+  border-radius: 2px;
+  margin: 2px 5px 2px 0px;
+  border: 1px solid #a9b6d2;
+}
+.tag-input-ctn .input-tag .delete-tag {
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0px 2px;
+}
+.tag-input-ctn .input-tag .delete-tag:hover {
+  background-color: #96b4d2;
+}
+
+  </style>

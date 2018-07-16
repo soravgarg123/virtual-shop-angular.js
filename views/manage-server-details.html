@@ -1,0 +1,84 @@
+<div id="content" ng-controller="userCtrl">
+<div id="content-header">
+  <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="javascript:void(0)" class="current">Server Details</a> </div>
+  <h1>Manage Streaming Server Details</h1>
+</div>
+    <div class="container-fluid">
+        <hr>
+  <div class="row-fluid" ng-init="getServerDetails()">
+    <div class="span8">
+      <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Server Details</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form method="post" novalidate class="form-horizontal" id="serverDetailForm" name="serverDetailForm" ng-submit="serverDetailForm.$valid && updateServerDetails()">
+            <center><span style="color:red" ng-if="errorMessage">{{ errorMessage }}</span>
+            <span style="color:green" ng-if="successMessage">{{ successMessage }}</span>
+            <div style="margin-top:10px;" class="loadersmall" ng-if="isLoading"></div></center>
+            <div class="control-group">
+              <label class="control-label">WSS Server Domain (IP)</label>
+              <div class="controls">
+                <input type="text"  class="span11" placeholder="Enter WSS Server Domain (IP Address)" name="wssServerIP" ng-model="wssServerIP" required/>
+                <span class="error-msgs" ng-show="serverDetailForm.wssServerIP.$dirty && serverDetailForm.wssServerIP.$invalid">
+                    <span ng-show="serverDetailForm.wssServerIP.$error.required">WSS Server Domain (IP) is required.</span>
+                </span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">WSS Server Port</label>
+              <div class="controls">
+                <input type="text"  class="span11" ng-maxlength="4" ng-minlength="4" placeholder="Enter WSS Server Port" name="wssServerPort" ng-model="wssServerPort" required/>
+                <span class="error-msgs" ng-show="serverDetailForm.wssServerPort.$dirty && serverDetailForm.wssServerPort.$invalid">
+                    <span ng-show="serverDetailForm.wssServerPort.$error.required">WSS Server Port is required.</span>
+                    <span ng-show="serverDetailForm.wssServerPort.$error.minlength">WSS Server Port minimum length should be 4.</span>
+                    <span ng-show="serverDetailForm.wssServerPort.$error.maxlength">WSS Server Port max length can not greater than 4.</span>
+                </span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">RTMP Server Port</label>
+              <div class="controls">
+                <input type="text"  class="span11" ng-maxlength="4" ng-minlength="4" placeholder="Enter RTMP Server Port" name="rtmpServerPort" ng-model="rtmpServerPort" required/>
+                <span class="error-msgs" ng-show="serverDetailForm.rtmpServerPort.$dirty && serverDetailForm.rtmpServerPort.$invalid">
+                    <span ng-show="serverDetailForm.rtmpServerPort.$error.required">RTMP Server Port is required.</span>
+                    <span ng-show="serverDetailForm.rtmpServerPort.$error.minlength">RTMP Server Port minimum length should be 4.</span>
+                    <span ng-show="serverDetailForm.rtmpServerPort.$error.maxlength">RTMP Server Port max length can not greater than 4.</span>
+                </span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Stream Key</label>
+              <div class="controls">
+                <input type="text"  class="span11" placeholder="Enter Stream Key" name="streamKey" ng-model="streamKey" required/>
+                <span class="error-msgs" ng-show="serverDetailForm.streamKey.$dirty && serverDetailForm.streamKey.$invalid">
+                    <span ng-show="serverDetailForm.streamKey.$error.required">Stream Key is required.</span>
+                </span>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success" ng-disabled="serverDetailForm.$invalid" disabled="disabled">Update</button>
+            </div>
+          </form>
+          <div class="widget-box" style="margin-bottom:0px;margin-top:0px;">
+          <div class="widget-content nopadding">
+            <table class="table table-striped table-bordered">
+              <tbody>
+                <tr>
+                  <td><strong>WSS Server URL</strong></td>
+                  <td>{{wssServerURL}}</td>
+                </tr>
+                <tr>
+                  <td><strong>RTMP Server URL</strong></td>
+                  <td>{{rtmpServerURL}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+    <main class="animsition" ng-init="userBlockList()">
+    <!--Main container sec start-->
+    <div class="main_container">
+      <section class="pills_sec">
+            <div class="container">
+            <div class="pills_par clearfix">
+            <div class="pills_left">
+              <div class="pills_head">
+                <div class="box_left">
+                  <div class="box_left_user">
+                    <img alt="" ng-if="userInfo.thumbImagePath" ng-src="{{serverPath.image_path+userInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}">
+                    <img alt="" ng-if="!userInfo.thumbImagePath && userInfo.thumbImagePath" ng-src="{{serverPath.image_path+userInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                    <img alt="" ng-if="!(userInfo.thumbImagePath && userInfo.imagePath)" ng-src="{{serverPath.no_user_image}}" >
+                  </div>
+               
+                </div>
+                <div  ng-if="userInfo.userID" class="box_center text-center">
+                {{(userInfo.userFirstName) ? userInfo.userFirstName+' '+userInfo.userLastName : userInfo.userEmailID}}
+              </div>
+              
+              <div  ng-if="!userInfo.userID == userInfo.userID" class="box_center text-center">
+                {{(userInfo.userFirstName) ? userInfo.userFirstName+' '+userInfo.userLastName : userInfo.userEmailID}}
+              </div>
+                <div class="box_right text-center">
+                  <a href="edit-profile" translate>EDIT</a>
+                </div>
+              </div><!--pills_head-->
+                
+            </div><!--pills_left-->
+
+              <div class="pills_right">
+                  <div class="widget blogPar" ng-repeat="block_lists in block_list">
+                    <div class="row align-items-center">
+                      <div class="col-sm-8">
+                        <div class="box_left_user"><a href="javascript:void(0)"><img ng-if="block_lists.thumbImagePath" src="{{block_lists.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}" alt=""><img ng-if="!block_lists.thumbImagePath" ng-src="{{serverPath.no_user_image}}" alt=""></a></div>
+                        <div class="widget_center">
+                          <a href="my_branches.html"><h2>{{block_lists.userFirstName}}</h2></a>
+                          <p>{{block_lists.userEmailID}}</p>
+                          
+                        </div>
+                        
+                      </div>
+                      <div class="col-sm-4 text-right ">
+                          <a href="javascript:void(0)" ng-click="userBlock(block_lists.blockFriendID,$index,'blist')" class="unblockLink" translate>UNBLOCK_USER</a>
+                      </div>
+                    </div>
+                  </div> <!--widget-->
+
+                    <div ng-if="loadMore" class="text-center">
+                    <button ng-click="(!userBlockListLoader) ? userBlockList() : angular.noop">{{(!userBlockListLoader) ? 'Add More' : '...Loading'}}</button></div>
+                    <div ng-if="block_list.length == 0" class="text-center"><h2 translate>NO_RECORD_FOUND</h2></div>
+              </div><!--pills_right-->
+
+               </div>
+          </div>
+      </section>
+    </div>
+<!--Footer sec end-->
+  </main>
+
+

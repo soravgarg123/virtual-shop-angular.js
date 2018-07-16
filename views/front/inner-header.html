@@ -1,0 +1,111 @@
+<!--Header sec start-->
+<header class="header_sec mainHeader" id="header" ng-controller="headerController">
+  <div class="header-top ">
+     <div class="container ">
+      <div class="row">
+        <div class="col-sm-2">
+        <div class="logo">
+            <a href="index.html"> <img src="img/logo1.png" class="img-responsive"></a>
+        </div>
+      </div>
+          <div class="col-sm-8 ">
+              <form  >
+                    <div class="row ">
+                      <div class="col-sm-9  searchBox">
+                        <div class="input-group ">
+                        <input type="text"  class="form-control" ng-model="searchPlace" name="searchPlace" placeholder="I’m Looking for..." >
+                        <div class="input-group-prepend" ng-init="success();">
+                          <span class="input-group-text" id="basic-addon1"><p>{{cityLocation}}</p></span>
+                        </div>
+                      </div>
+                   </div>
+                   
+                    <div class="col-sm-3" >
+                      <a  href="/other_list"  ng-click="clickSearch(searchPlace)" class="btn btn-primary btn-block theme_btn" titleBtn="Search" translate><i class="flaticon-magnifying-glass"></i>SEARCH</a>
+                    </div>
+
+                  </div>
+
+            </form>
+
+
+          </div>
+
+
+        <div class="col-sm-2">
+          <div class="row">
+            
+          
+          <ul class="list-inline text-right">
+            <li class="list-inline-item"><!-- <a  href="#"><i class=" fa fa-bell-o"></i></a> --></li>
+            <li class="list-inline-item">
+              <div class="dropdown ">
+                      <button class="dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true"> 
+                      <label>
+                      {{(userFirstName) ? userFirstName+' '+userLastName : userInfo.userEmailID}}
+                      </label>
+                        
+                      <span class="caret"></span></button>
+                      <div class="dropdown-menu ">
+                          <a class="dropdown-item" href="my-profile/{{userInfo.userID}}" translate>MY_PROFILE</a>
+                          <a class="dropdown-item" href="my-places/{{userInfo.userID}}" translate>MYPLACES</a>
+                          <a class="dropdown-item" href="saved-places/{{userInfo.userID}}" translate>MYSAVEDPLACES</a>
+                          <a class="dropdown-item" href="liked-places/{{userInfo.userID}}" translate>MY_LIKED_PLACES</a>
+                          <a class="dropdown-item" href="history-places/{{userInfo.userID}}" translate>HISTORY</a>
+                          <a class="dropdown-item" href="settings" translate>SETTINGS</a>
+                          <a class="dropdown-item" href="javascript:void(0)" ng-click="logout()" translate>LOG_OUT</a>
+                        </div>
+                    </div>
+            </li>
+          </ul>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+  
+  <div class="header-bottom  main_nav">
+
+    <div class="container ">
+
+      <div class="row">
+
+        <div class="col-sm-6 offset-sm-2">
+          <ul class="list-inline ">
+            
+            <li class="list-inline-item " ng-repeat="categoriesList in categoriesLists"> <button ng-click="clickCategory(categoriesList.categoryID,$index)" class="btn {{classCategories[$index]}} theme_btn"><i class="{{classCategoriesIcons[$index]}}"></i> <span> {{categoriesList.categoryName}}</span></button> </li>
+          </ul>
+        </div>
+
+
+        <div class="col-sm-4  text-right rmt10 mt10 mb10">
+          <nav class="navbar navbar-expand-lg navbar-light float-right bg-light">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse bR5" id="navbarSupportedContent">
+
+              <ul class="navbar-nav  text-center justify-content-center ">
+              
+                <li class="nav-item"> <a class="nav-link" href="add-places"><i class="fa fa-plus-circle"></i>&nbsp<lable translate>ADD_PLACES</label></a></li>
+              </ul>
+            </div>
+
+
+          </nav>
+
+        </div>
+
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+</header>
+<!--Header sec end-->

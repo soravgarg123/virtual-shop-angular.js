@@ -1,0 +1,54 @@
+<main class="animsition">
+  <!--Main container sec start-->
+  <div class="main_container  ">
+    <section class="signForm_sec">
+      <div class="container">
+        <form id="signinform" novalidate ng-submit="login()" name="signinform">
+          <div class="formpar text-center">
+            <h1 translate>SIGN_IN</h1>
+            <h4 translate>SIGN_IN_NOW_TO_ACCESS_YOUR</h4>
+            <ul>
+              <li><a href="#" translate><i class="fa fa-facebook-f"></i>WITH_FACEBOOK</a></li>
+              <li><a href="#" translate><i class="fa fa-google-plus"></i>WITH_GOOGLE</a></li>
+            </ul>
+            <div class="form-group">
+              <input type="email" class="form-control" placeholder="Email Address" required ng-model="loginData.userEmail" name="userEmail">
+              <span class="error-msgs" ng-show="signinform.userEmail.$dirty && signinform.userEmail.$invalid">
+                  <span ng-show="signinform.userEmail.$error.email" translate>PLEASE_ENTER_VALID_EMAIL</span>
+              </span>
+            </div>
+
+            <div class="form-group inputIconpar">
+              <input type="{{type}}" prevent-copy-paste  class="form-control" placeholder="Password" name="userPassword" ng-model="loginData.userPassword" required>
+              <span class="error-msgs" ng-show="signinform.userPassword.$dirty && signinform.userPassword.$invalid">
+                <span ng-show="signinform.userPassword.$error.required" translate>PASSWORD_IS_REQUIRED</span>
+              </span>
+             <show-password></show-password>
+              <button class="btn_transparent inputIcon" type="button" ng-click="showPassword()"><span ng-class="(type == 'password' ? 'fa fa-eye' : 'fa fa-eye-slash')"></span></button>
+            </div>
+            <div class="row ">
+              <div class="col-sm-6 text-left">
+                <div class="checkbox">
+                  <input name="optradio2"  type="checkbox" ng-click="rememberMe()" ng-model="remember">
+                    <label translate>REMEMBER_ME</label>
+                </div>
+              </div>
+              <div class="col-sm-6 text-right">
+                <p><a href="forgot-password" translate>FORGOT_PASSWORD</a></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block theme_btn" ng-disabled="signinform.$invalid || loginLoader" disabled="disabled" translate><span ng-if="loginLoader"><i class="fa fa-circle-o-notch fa-spin" ></i></span>SIGN_IN</button>
+            </div>
+            <div class="text-center">
+         
+              <p>Don't have an account? <a href="sign-up" translate>SIGN_UP</a></p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+  <!--Main container sec end-->  
+</main>
+  

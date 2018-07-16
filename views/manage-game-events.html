@@ -1,0 +1,160 @@
+
+<div id="content" ng-controller="gameCtrl" ng-style="myStyle">
+<div id="content-header">
+  <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="javascript:void(0)" class="current">Game Events</a> </div>
+  <h1>Manage Game Events</h1>
+</div>
+    <div class="container-fluid">
+        <hr>
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Game Events</h5>
+          
+        </div>
+        <div class="widget-content nopadding">
+            <h5 style="margin-left:10px;">{{currentTime}}</h5>
+            <h5 style="margin-left:10px;">{{currentTimeClientTimezoneWise}}</h5>
+            <form style="" method="post" class="form-horizontal" id="gameEventForm" name="gameEventForm" ng-submit="gameEventForm.$valid && startGame()" ng-init="getTodayGamesList()">
+                <center><span style="color:red" ng-if="errorMessage">{{ errorMessage }}</span>
+                  <span style="color:green" ng-if="successMessage">{{ successMessage }}</span>
+                  <div style="margin-top:10px;" class="loadersmall" ng-if="isLoading"></div>
+                </center>
+                <div class="control-group">
+                    <label class="control-label" style="padding-left:10px; text-align:left;">Today Game</label>
+                    <div class="controls">
+                      <select ng-init="mySwitch=false" class="span9" name="gameID" ng-model="gameID" required ng-disabled="mySwitch">
+                          <option value="">Select Today Game</option>
+                          <option value="{{x.gameID}}" ng-repeat="x in records">{{x.presenterName}} - ${{x.gamePrizeMoney}} - {{x.gameDateTime}}</option>
+                      </select>
+                      <span class="error-msgs" ng-show="gameEventForm.gameID.$dirty && gameEventForm.gameID.$invalid">
+                          <span ng-show="gameEventForm.gameID.$error.required">Please select today game.</span>
+                      </span>
+                    </div>
+                </div>
+                <div class="form-actions" ng-if="isFormHide" style="padding-left: 10px;">
+                  <button type="submit" class="btn btn-success" ng-disabled="gameEventForm.$invalid" disabled="disabled">Start Game</button>
+                </div>
+            </form>
+            <div class="game-details-section" ng-if="isGameDetails">
+              <div class="span12">
+                <h4 style="margin-left:10px;"><strong>Game Basic Details</strong></h4>
+                <div class="widget-box" style="border: 0;">
+                  <div class="widget-content">
+                    <table class="table table-striped table-bordered">
+                      <tbody>
+                        <tr>
+                          <td><strong>Presenter Name</strong></td>
+                          <td>{{gameDetails.presenterName}}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Game DateTime</strong></td>
+                          <td>{{gameDetails.gameDateTimeFormatted}}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Game Created DateTime</strong></td>
+                          <td>{{gameDetails.gameCreatedDateFormatted}}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Prize Money</strong></td>
+                          <td>${{gameDetails.gamePrizeMoney}}</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Online Users</strong></td>
+                          <td>{{onlineUsersCount}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                </div>
+                <div class="iframe_contant">
+                  <iframe id="fp_embed_player" ng-src="{{wssServerURLNew}}" marginwidth="0" marginheight="0" frameborder="0" width="30%" height="50%" scrolling="no" allowfullscreen="allowfullscreen"></iframe>
+                  <div ng-if="isQuestionsList" class="questions-area" ng-repeat="Q in gameQuestionData | startFrom : (currentQuestionNumber-1) | limitTo:1">
+                    <p>Q-{{currentQuestionNumber}}) {{Q.gameQuestion}}</p>
+                    <div class="radio" ng-repeat="A in Q.gameOptions"">
+                      <label>
+                        <div ng-if="A.isCorrect == 0">
+                          <input type="radio" name="optradio" value="{{A.optionTitle}}">
+                          {{A.optionTitle}}
+                        </div>
+                        <div ng-if="A.isCorrect == 1" style="color:green;" title="Correct Answer">
+                          <input type="radio" name="optradio" value="{{A.optionTitle}}" checked="checked">
+                          {{A.optionTitle}}
+                        </div>
+                      </label>
+                    </div>
+                    <div class="links">
+                    <a href="javascript:void(0)" ng-disabled="Q.quesitionDisabled" ng-click="fireQuestion(Q,Q.gameQuestionID,Q.gameQuestion,Q.gameOptions)" title="{{Q.fireQuestionButtonTitle}}" class="btn btn-primary">{{Q.fireQuestionButtonTxt}}</a>
+                    <a href="javascript:void(0)" ng-disabled="isAnswerDisabled" ng-click="fireCorrectAnswer(Q,Q.gameQuestionID,Q.gameOptions)" class="btn btn-primary" title="{{Q.fireAnswerButtonTitle}}">{{Q.fireAnswerButtonTxt}}</a>
+                    <a href="javascript:void(0)" ng-disabled="isViewResultBtnDisabled" class="btn btn-primary" ng-click="viewQuestionResults(Q.gameQuestionID)">{{viewResultsButton}}</a>
+                    <a href="javascript:void(0)" ng-disabled="isNextBtnDisabled" class="btn btn-primary" ng-click="getNextQuestion(Q.gameQuestionID)">{{nextQuestionButton}}</a>
+                    </div>
+                  </div>
+                  <div ng-if="isWinnerList">
+                      <strong>No Of Winners: </strong>{{noOfWinners}}<br/>
+                      <a href="javascript:void(0)" ng-if="isWinnerListFired" ng-click="winnersList(gameDetails.gameID)" title="Click Here To Fire Winner List" class="btn btn-primary">Fire Winners List</a>
+                      <a href="javascript:void(0)" ng-if="isGameFinished" class="btn btn-primary" ng-click="finishGame(gameDetails.gameID)">Finish Game & View Results</a>
+                  </div>
+                  </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+
+<!-- Question Results Modal -->
+ 
+<div class="modal fade" id="questionResult" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Question Result</h4>
+      </div>
+      <div class="modal-body">
+        <p><strong ng-bind="questionTitle"></strong></p>
+         <table class="table table-striped table-bordered">
+            <tbody>
+             <tr>
+                <td><strong>Total Users</strong></td>
+                <td>{{totalUsers}}</td>
+              </tr>
+              <tr>
+                <td><strong>Total Consumed Extra Life</strong></td>
+                <td>{{totalConsumedExtraLife}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <td><strong>Option Title</strong></td>
+                <td><strong>Total Users</strong></td>
+              </tr>
+            </thead>
+            <tbody>
+             <tr ng-repeat="QOR in questionOptionsResult">
+                <td>
+                  <div ng-if="QOR.isCorrect == 0">
+                    {{QOR.optionTitle}}
+                  </div>
+                  <div ng-if="QOR.isCorrect == 1" style="color:green;" title="Correct Answer">
+                    {{QOR.optionTitle}}
+                  </div>
+                </td>
+                <td>{{QOR.usersCount}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>

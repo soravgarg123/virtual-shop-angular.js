@@ -1,0 +1,182 @@
+<main class="animsition " ng-init="editProfile();getMylisting()">
+  <!--Main container sec start-->
+  <div class="main_container follow">
+    <section class="pills_sec">
+      <div class="container">
+        <div class="pills_par clearfix"> 
+          <div class="pills_left ">
+            <div class="pills_head active">
+              <div class="box_left">
+                <div class="box_left_user">
+                    <img alt="" ng-if="userInfo.thumbImagePath" ng-src="{{serverPath.image_path+userInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}">
+                    <img alt="" ng-if="!userInfo.thumbImagePath && userInfo.thumbImagePath" ng-src="{{serverPath.image_path+userInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                    <img alt="" ng-if="!(userInfo.thumbImagePath && userInfo.imagePath)" ng-src="{{serverPath.no_user_image}}" >
+
+                </div>
+              </div>
+              <div  ng-if="userInfo.userID" class="box_center text-center">
+                {{(userInfo.userFirstName) ? userInfo.userFirstName+' '+userInfo.userLastName : userInfo.userEmailID}}
+              </div>
+              
+              <div  ng-if="!userInfo.userID == userInfo.userID" class="box_center text-center">
+
+                {{(userInfo.userFirstName) ? userInfo.userFirstName+' '+userInfo.userLastName : userInfo.userEmailID}}
+              </div>
+              <div class="box_right text-center" ng-if="!userID">
+                <a href="edit-profile"   ng-if="userInfo.userID == userInfo.userID" translate>EDIT</a>
+                <a href="edit-profile" ng-if="!userInfo.userID" translate>EDIT</a>
+              </div>
+               </div>
+              <!-- <div >
+                <ul ng-if="!userID">
+                  <li><a href="block-user/{{userInfo.userID}}" ng-if="userInfo.userID == userInfo.userID" translate>BLOCK_USER_LIST</a>
+                  <a href="block-user/{{userInfo.userID}}" ng-if="!userInfo.userID" translate>BLOCK_USER_LIST</a></li>
+                </ul>
+             
+            </div> --><!--pills_head-->
+          </div><!--pills_left-->
+          <div class="pills_right pill-md ">
+            <div class="heading">
+              <div class="row">
+                <div class="col-sm-8">
+                     <h4 align="justify" translate>FOLLOWING_DESCRIP</h4>
+                </div>
+
+                <div class="col-sm-4 text-right">
+               
+                  <ul class="list-inline report_btn" ng-if="userID">
+
+                      <li class="list-inline-item">
+                        <button type="button" ng-if="userInfo.isFollowing==1" class="btn btn-primary  btn-block  btn-xs theme_btn" ng-click="(!userFollowLoader) ? userFollow(userInfo.userID) : angular.noop()" translate>UNFOLLOW_USER</button>
+                        <button type="button" ng-if="!userInfo.isFollowing==1" class="btn btn-primary  btn-block  btn-xs theme_btn" ng-click="(!userFollowLoader) ? userFollow(userInfo.userID) : angular.noop()" translate>FOLLOW_USER</button>
+                      </li>
+
+                       <li class="list-inline-item">
+                        <button ng-if="userInfo.userBlock==1" type="button" class="btn btn-primary  btn-block  btn-xs theme_btn" ng-click="blockUser('blockModal')" data-toggle="modal" translate>UNBLOCK_USER</button>
+                        <button ng-if="!userInfo.userBlock==1" type="button" class="btn btn-primary  btn-block  btn-xs theme_btn" ng-click="blockUser('blockModal')" data-toggle="modal" translate>BLOCK_USER</button>
+                      </li>
+                    </ul>
+               
+                </div>
+              </div>
+            </div>
+            <!-- Nav pills -->
+            <ul class="nav nav-pills row">
+              <li class="nav-item" ng-class="(activeTab == 'home')? 'active' : ''">
+                <a class="nav-link " ng-class="(activeTab == 'home')? 'active' : ''" href="javascript:void(0)" ng-click="tabChange('home');" >
+                LIST<h2>{{profileInfo.noOfList}}</h2>
+                </a>
+              </li>
+              <li class="nav-item" ng-class="(activeTab == 'menu1')? 'active' : ''">
+                <a class="nav-link" ng-class="(activeTab == 'menu1')? 'active' : ''" href="javascript:void(0)" ng-click="tabChange('menu1')" >
+                FOLLOWERS<h2>{{profileInfo.noOfFollowers}}</h2>
+                </a>
+              </li>
+              <li class="nav-item" ng-class="(activeTab == 'menu2')? 'active' : ''">
+                <a class="nav-link " ng-class="(activeTab == 'menu2')? 'active' : ''" href="javascript:void(0)" ng-click="tabChange('menu2')" >FOLLOWING<h2>{{profileInfo.noOfFollowings}}</h2>
+                </a>
+              </li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane {{activeTab=='home'? 'active' : '' }} " id="home" >
+                <div class="follower_box " >
+                  <div class="row aItemC" >
+                   <div class="col-sm-4 list_img_par" ng-repeat="getLists in getList">
+              <div class="list_img"><img ng-if="getLists.originalCoverPhoto" class="img-responsive" ng-src="{{serverPath.image_path+getLists.originalCoverPhoto}}" on-error-src="{{serverPath.no_user_place}}" alt="">
+              <img  class="img-responsive" ng-if="!getLists.originalCoverPhoto"  ng-src="{{serverPath.no_user_place}}" alt=""/></div>
+              <div class="widget_center">
+              <span></span>
+                <a ng-if="getLists.name=='My Added places'" href="my-places/{{userInfo.userID}}"><h3>{{getLists.total_count}} {{getLists.name}} {{getLists.addedDate | myDatee}}</h3></a>
+                <a ng-if="getLists.name=='My Liked places'" href="liked-places/{{userInfo.userID}}"><h3>{{getLists.total_count}} {{getLists.name}} {{getLists.addedDate | myDatee}}</h3></a>
+                <a ng-if="getLists.name=='My Saved places'" href="saved-places/{{userInfo.userID}}"><h3>{{getLists.total_count}} {{getLists.name}} {{getLists.addedDate | myDatee}}</h3></a>
+                <a ng-if="getLists.name!='My Added places' && getLists.name!= 'My Liked places' && getLists.name!='My Saved places'" href="my-List/{{getLists.placesMyListID}}/{{userInfo.userID}}"><h3>{{getLists.total_count}} {{getLists.name}} {{getLists.addedDate | myDatee}}</h3></a>
+                
+              </div>
+            </div>
+                  </div><!--row-->
+                </div>
+              </div><!--#home-->
+            
+              <div class="tab-pane {{activeTab=='menu1'? 'active' : '' }} " id="menu1" >
+                <div class="follower_box"  ng-init="followList('FOLLOWERS')">
+                  <ul  >
+                    <li class="col-sm-4 list_img_par" ng-repeat="followerList in followerLists">
+                      <div class="user_head" >
+                        <div class="box_left">
+                          <div class="box_left_user">
+                              <img alt="" class="img-responsive" ng-if="followerList.thumbImagePath" ng-src="{{serverPath.image_path+followerList.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}">
+                              <img alt="" class="img-responsive" ng-if="!followerList.thumbImagePath && followerList.imagePath" ng-src="{{serverPath.image_path+followerList.imagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                              <img alt="" class="img-responsive" ng-if="!(followerList.thumbImagePath && followerList.imagePath)" ng-src="{{serverPath.no_user_image}}" >
+                          </div>
+                        </div>
+                        <div class="box_right ">
+                           {{(followerList.userFirstName) ? followerList.userFirstName+' '+followerList.userLastName : followerList.userEmailID}}
+                          <span><button type="button" class="btn_transparent"><i class="fa fa-plus-circle"></i></button></span>
+                        </div>
+                        
+                      </div><!--user_head-->
+                    </li>
+                  </ul>
+                  <div ng-if="loadFollowerMore" class="text-center"></br><button ng-click="(!followerLoader) ? followList('FOLLOWERS') : angular.noop">{{(!followerLoader) ? 'Add More' : '...Loading'}}</button></div>
+                  <div ng-if="followerLists.length == 0" class="text-center"><h4 translate>NO_RECORD_FOUND</h4></div>
+                </div>
+              </div>
+              <div class="tab-pane {{activeTab=='menu2'? 'active' : '' }} " id="menu2"  >
+                <div class="follower_box" ng-init="followList('FOLLOWING')">
+                  <ul  >
+                    <li class="col-sm-4 list_img_par" ng-repeat="followingList in followingLists">
+                      <div class="user_head">
+                        <div class="box_left">
+                          <div class="box_left_user">
+                              <img alt="" class="img-responsive" ng-if="followingList.thumbImagePath" ng-src="{{serverPath.image_path+followingList.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}">
+                              <img alt="" class="img-responsive" ng-if="!followingList.thumbImagePath && followingList.imagePath" ng-src="{{serverPath.image_path+userInfo.imagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                              <img alt="" class="img-responsive" ng-if="!(followingList.thumbImagePath && followingList.imagePath)" ng-src="{{serverPath.no_user_image}}" >
+                          </div>
+                        </div>
+                        <div class="box_right ">
+                           {{(followingList.userFirstName) ? followingList.userFirstName+' '+followingList.userLastName : followingList.userEmailID}}
+                          <span><button type="button" class="btn_transparent cG"><i class="fa fa-check"></i></button></span>
+                        </div>
+                        
+                      </div><!--user_head-->
+                    </li>
+                    </ul>
+                    <div ng-if="loadFollowingMore" class="text-center"></br><button ng-click="(!followerLoader) ? followList('FOLLOWING') : angular.noop">{{(!followerLoader) ? 'Add More' : '...Loading'}}</button></div>
+
+                    <div ng-if="followingLists.length == 0" class="text-center"><h4 translate>NO_RECORD_FOUND</h4></div>
+
+                </div>
+              </div><!--#menu2-->
+            </div>
+          </div><!--pills_right-->
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <div class="modal fade sm_modal privacy_modal  modal-center" id="blockModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content privacy">
+          <div class="modal-header text-center">
+            <h5 class="modal-title" id="exampleModalLabel" translate>ARE_YOU_SURE_YOU_WANT_TO_BLOCK</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+              <p translate>THIS_USER_WILL_NOT_BE_ABLE_TO_SEE_ANY_ACTIVITIES</p>
+            <div class="text-right footer_modal">
+                <button class="btn btn-sm btn-primary theme_btn theme_dark" data-dismiss="modal" aria-label="Close" translate>NO</button>
+                <button ng-if="userInfo.userBlock==1" class="btn btn-sm btn-primary theme_btn" ng-click="(!userBlockLoader) ? userBlock(userInfo.userID,$index,'ulist') : angular.noop()" aria-label="Close" data-dismiss="modal" translate>UNBLOCK</button> 
+                <button ng-if="!userInfo.userBlock==1" class="btn btn-sm btn-primary theme_btn" ng-click="(!userBlockLoader) ? userBlock(userInfo.userID,$index,'ulist') : angular.noop()" aria-label="Close" data-dismiss="modal" translate>BLOCK</button> 
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--Main container sec end-->
+</main>
+  

@@ -1,0 +1,292 @@
+<main class="animsition " ng-init="editProfile()">
+  <!--Main container sec start-->
+  <div class="main_container  ">
+    <section class="pills_sec settings">
+      <div class="container">
+        <aside>
+          <div class="row">
+            <div class="col-sm-9">
+              <h2 translate>FIND_GREATE_PLACES</h2>
+              <span>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor </span>
+            </div>
+            <div class="col-sm-3">
+              <div class="text-right">
+              <button class="btn btn-sm btn-primary theme_btn" translate>GET_APP</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <div class="pills_par clearfix">
+          <div class="pills_left">
+            <div class="pills_head">
+              <div class="box_left">
+                <div class="box_left_user">
+                  <img alt="" ng-if="userInfo.thumbImagePath" ng-src="{{serverPath.image_path+userInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                  <img alt="" ng-if="!userInfo.thumbImagePath && userInfo.imagePath" ng-src="{{serverPath.image_path+userInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                   <img alt="" ng-if="!(userInfo.thumbImagePath && userInfo.imagePath)" ng-src="{{serverPath.no_user_image}}" >
+                </div>
+              </div>
+              <div class="box_center text-center">
+                {{(userInfo.userFirstName) ? userInfo.userFirstName+' '+userInfo.userLastName : userInfo.userEmailID}}
+              </div>
+              
+              <div class="box_right text-center">
+                <a href="edit-profile" translate>EDIT</a>
+              </div>
+            </div><!--pills_head-->
+
+            <div class="pills_nav text-right">
+              <ul>
+                <li><a href="my-places/{{userInfo.userID}}" translate>MYPLACES</a></li>
+                <li><a href="saved-places/{{userInfo.userID}}" translate>MYSAVEDPLACES</a></li>
+                <li><a href="liked-places/{{userInfo.userID}}" translate>MY_LIKED_PLACES</a></li>
+                <li><a href="history-places/{{userInfo.userID}}" translate>HISTORY</a></li>
+                <li><a href="settings" class="active" translate>SETTINGS</a></li>
+              </ul>
+            </div>   
+          </div><!--pills_left-->
+          <div class="pills_right  ">
+            <div class="head">
+              <h3 translate>SETTINGS</h3>
+            </div>
+            <form id="changePassword" name="changePasswordForm" novalidate ng-submit="changePassword(changePasswordForm)">
+              <div class="form-group  passPar">
+                <label for="" translate>CHANGE_PASSWORD</label>
+                <div class="inputIconpar">
+                    <input prevent-copy-paste type="{{currentType}}" class="form-control" placeholder="Current Password"  name="currentPassword" ng-model="currentPassword" required>
+                    <span class="error-msgs" ng-show="changePasswordForm.currentPassword.$dirty && changePasswordForm.currentPassword.$invalid">
+                      <span ng-show="changePasswordForm.currentPassword.$error.required" translate>CURRENT_PASSWORD_IS_REQUIRED</span>
+                    </span>
+                    <current-show-password></current-show-password>
+                    <button class="btn_transparent inputIcon" type="button" ng-click="showCurrentPassword()"><span ng-class="(currentType == 'password' ? 'fa fa-eye' : 'fa fa-eye-slash')"></span></button>
+                </div>
+              </div>
+              <div class="form-group passPar">
+                <div class="inputIconpar">
+                <input prevent-copy-paste type="{{type}}" class="form-control" placeholder="New Password" name="newPassword" ng-model="newPassword" required>
+                  <span class="error-msgs" ng-show="changePasswordForm.newPassword.$dirty && changePasswordForm.newPassword.$invalid">
+                    <span ng-show="changePasswordForm.newPassword.$error.required" translate>NEW_PASSWORD_IS_REQURED</span>
+                  </span>
+                  <show-password></show-password>
+                    <button class="btn_transparent inputIcon" type="button" ng-click="showPassword()"><span ng-class="(type == 'password' ? 'fa fa-eye' : 'fa fa-eye-slash')"></span></button>
+                </div>
+
+                <div class="text-right"><button type="buttton" class="btn btn-sm btn-primary theme_btn" ng-disabled="changePasswordForm.$invalid || changeLoader" disabled="disabled"  translate><span ng-if="changeLoader"><i class="fa fa-circle-o-notch fa-spin" ></i></span >SAVE</button></div>
+              </div>
+            </form>
+            <!-- <h4 translate>CONNECT_MORE_ACCOUNT</h4>
+            <h5 translate>SHARING_WITH_OTHER</h5>
+            <ul>
+              <li><a href="#" ><i class="fa fa-facebook-f"></i></a> 
+                <label>
+                  <div class="nam_of_icon">Facebook</div>
+                  <span translate>LINKED_TO<a href="#"></a></span>
+                  <p translate>ALL_OF_YOUR_ACTIVITIES_WILL_BE_FACEBOOK</p>
+                </label>
+              </li>
+
+              <li><a href="#" class="default"><i class="fa fa-twitter"></i> </a> 
+                <label>
+                  <div class="nam_of_icon">Tiwtter</div>
+                  <span translate>ALL_OF_YOUR_ACTIVITIES_WILL_BE_TWITTER</span>
+                  <input type="url" class="form-control">
+                  <button type="button" class="btn">Add Tiwtter</button>
+                </label>
+              </li>
+            </ul> -->
+            <div class="rw1 ">
+              <h4 translate>NOTIFICATIONS</h4>
+              <div class="switch_box">
+                <span translate>PLACE_IS_LIKED_BY_THE_PERSON_YOU_FOLLOW</span> 
+                <label class="switch pull-right">
+                  <input type="checkbox" ng-model="profileInfo.likePlaceNotification" ng-true-value="1" ng-false-value="0" ng-change="updateSetting('LIKE_PLACE', profileInfo.likePlaceNotification)">
+                  <span class="slider round"></span>
+                </label> 
+              </div>
+              <div class="switch_box">
+                <span translate>PERSON_I_FOLLOWING_ADDS_A_NEW_PLACE</span> 
+                <label class="switch pull-right">
+                  <input type="checkbox" ng-model="profileInfo.addNewPlaceNotification" ng-true-value="1" ng-false-value="0" ng-change="updateSetting('ADD_PLACE', profileInfo.addNewPlaceNotification)">
+                  <span class="slider round"></span>
+                </label> 
+              </div>
+
+              <div class="switch_box">
+                <span translate>FOR_A_PLACE_I_HAD_CHAKED_IN_BEFORE</span> 
+                <label class="switch pull-right">
+                  <input type="checkbox" ng-model="profileInfo.checkedInPlaceNotification" ng-true-value="1" ng-false-value="0" ng-change="updateSetting('CHECKED_IN', profileInfo.checkedInPlaceNotification)">
+                  <span class="slider round"></span>
+                </label> 
+              </div>
+
+              <div class="switch_box">
+                <span translate>BASED_ON_MY_PREVIWES_HISTORY</span> 
+                <label class="switch pull-right">
+                  <input type="checkbox" ng-model="profileInfo.browserHistoryNotification" ng-true-value="1" ng-false-value="0" ng-change="updateSetting('BROWSE_HISTORY', profileInfo.browserHistoryNotification)">
+                  <span class="slider round"></span>
+                </label> 
+              </div>
+              <div class="switch_box" >
+                <span translate>BLOCK_USER_LIST</span> 
+                
+                  <a href="block-user/{{userInfo.userID}}" class="unblockLink pull-right" style="padding: 0px 15px;" translate>MANAGE</a>
+                  
+                
+              </div>
+              <div class="rw3">
+                <div class="list_group">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h4 translate>lANGUAGE</h4>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="radio_box_par">
+                        <div class="radio_box">
+                            <div class="radio">
+                            <input name="optradio1" type="radio" ng-model="profileInfo.userLanguage" ng-value="2" ng-change="updateSetting('LANGUAGE', profileInfo.userLanguage,'en_US');" translate="LANG_EN_US">
+                              <label>English </label>
+                          </div>
+                        </div>
+                        <div class="radio_box">
+                          <div class="radio">
+                            <input name="optradio1" type="radio" ng-model="profileInfo.userLanguage" ng-value="1" ng-change="updateSetting('LANGUAGE', profileInfo.userLanguage,'ai_AI')" translate="LANG_AI_AI">
+                            <label translate>ARABIC</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!--list_group-->
+                <div class="list_group">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h4 translate>PRIVACY<button type="button" class="btn_transparent privacyModalBtn" data-target="#privacyModal" data-toggle="modal" ><i class="fa fa-info-circle"></i></button></h4>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="radio_box_par">
+                        <div class="radio_box">
+                            <div class="radio">
+                            <input name="optradio" type="radio" ng-model="profileInfo.userPrivacy" ng-value="2" ng-change="updateSetting('PRIVACY', profileInfo.userPrivacy)">
+                              <label translate>PUBLIC</label>
+                          </div>
+                        </div>
+                        
+                        <div class="radio_box">
+                         <div class="radio">
+                          <input name="optradio" type="radio" ng-model="profileInfo.userPrivacy" ng-value="1" ng-change="updateSetting('PRIVACY', profileInfo.userPrivacy)">
+                            <label translate>PRIVATE</label>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!--list_group-->
+
+                <div class="list_group">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <h4 translate>DELETE_ACCOUNT</h4>
+                    </div>
+
+                    <div class="col-sm-6 text-right">
+                       <button type="button" href="javascript:void(0)" data-toggle="modal" class="btn btn-sm btn-primary theme_btn" ng-click="deleteAccoutPopup('deleteModal')" translate>CLICK</button>
+                    </div>
+                  </div>
+                </div><!--list_group-->
+              </div>
+            </div><!--pills_right-->
+          </div>
+        </div>
+      </section>
+    </div>
+    <!--Main container sec end-->
+  </main>
+ <!-- privacy_modal start-->
+    <div class="modal fade sm_modal privacy_modal  modal-center" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content privacy">
+      <div class="modal-header text-center">
+        <h5 class="modal-title" id="exampleModalLabel">Privacy</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+     
+          <p><b>PUBLIC</b>: All the users will be able to see your activites </p>
+          <p><b>PRIVATE</b>: Only your followers will be able to see your activites. </p>
+       
+      </div>
+    </div>
+  </div>
+</div>
+<!-- privacy_modal   end-->
+
+
+<!-- sm_modal start-->
+    <div class="modal fade sm_modal modal-center"  id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          	<div class="modal-header text-center">
+	            <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	              <span aria-hidden="true">×</span>
+	            </button>
+          	</div>
+          	<div class="modal-body">
+          		<form id="deleteAccoutForm" name="deleteAccoutForm" novalidate ng-submit="deleteAccout()">
+	            	<div class="delete_par">
+	            	
+		              	<h5><label translate>WHY_ARE_YOU_LEAVING_LAMMAH</label> {{APP_NAME}}?</h5>
+		              	<span translate>ALL_OF_YOUR_HISTORY</span>
+		              	<ul>
+		                  	<li> 
+			                    <div class="radio">
+			                    <input name="optradio2" type="radio" ng-model="deleteAcountReason" name="deleteAcountReason" value="It doesn't seem useful" required>
+					                
+			                    <label translate>IT_DOESENT_SEEM_USEFUL</label>
+			                    </div>
+		                  	</li>
+		                  	<li> 
+			                    <div class="radio">
+			                    <input name="optradio2" type="radio" ng-model="deleteAcountReason" name="deleteAcountReason" value="I have a privacy concren" required>
+			                    <label translate>I_HAVE_A_PRIVACY_CONCERN</label>
+			                    </div>
+		                  	</li>
+		                  	<li> 
+			                    <div class="radio">
+			                    <input name="optradio2" type="radio" ng-model="deleteAcountReason" name="deleteAcountReason" value="Other" required>
+			                    <label translate>OTHER</label>
+			                    </div>
+		                  	</li>
+		                  	<span class="error-msgs" ng-show="deleteAccoutForm.deleteAcountReason.$dirty && deleteAccoutForm.deleteAcountReason.$invalid" translate>PLEASE_SELECT_REASON</span>
+	              		</ul>
+			            <div ng-if="deleteAcountReason == 'Other'">
+			              <textarea class="form-control" maxlength="160" rows="3" placeholder="Type your reason..." ng-model="message" name="message" required></textarea>
+                    <span>{{160 - message.length}}</span>
+			              <span class="error-msgs" ng-show="deleteAccoutForm.message.$dirty && deleteAccoutForm.message.$invalid">
+			                  	PLEASE_TYPE_YOUR_REASON
+			                </span>
+			            </div>
+             		</div>
+	             	<div class="text-right">
+		                <button class="btn btn-sm btn-primary theme_btn theme_dark"  data-dismiss="modal" aria-label="Close">Cancel</button>
+		                <button type="submit" class="btn btn-sm btn-primary theme_btn" 	ng-disabled="deleteAccoutForm.$invalid || deleteAccountLoader" disabled="disabled" ><span ng-if="deleteAccountLoader"><i class="fa fa-circle-o-notch fa-spin" ></i></span>Done</button>
+	             	</div>
+             	</form>  
+          	</div>
+        </div>
+      </div>
+    </div>
+<!-- sm_modal end-->
+
+
+
+
+
+
+
+  
+
+

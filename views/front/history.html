@@ -1,0 +1,89 @@
+
+  <main class="animsition " ng-init="myLists('CHECKED_PLACES')">
+    <!--Header sec start-->
+    <div class="main_container  ">
+      <section class="pills_sec">
+          <div class="container">
+            <div class="pills_par clearfix">
+              
+            <div class="pills_left">
+              <div class="pills_head">
+                <div class="box_left">
+                  <div class="box_left_user">
+                    <img alt="" ng-if="userInfo.thumbImagePath" ng-src="{{serverPath.image_path+userInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}">
+                    <img alt="" ng-if="!userInfo.thumbImagePath && userInfo.thumbImagePath" ng-src="{{serverPath.image_path+userInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                    <img alt="" ng-if="!(userInfo.thumbImagePath && userInfo.imagePath)" ng-src="{{serverPath.no_user_image}}" >
+                  </div>
+               
+                </div>
+                <div class="box_center text-center">
+                 {{(userInfo.userFirstName) ? userInfo.userFirstName+' '+userInfo.userLastName : userInfo.userEmailID}}
+                </div>
+                <div class="box_right text-center">
+                  <a href="edit_profile.html" translate>EDIT</a>
+                </div>
+              </div><!--pills_head-->
+
+              <div class="pills_nav text-right">
+                <ul>
+                  <li><a href="follower" translate>MY_PROFILE</a></li>
+                  <li><a href="my-places/{{userInfo.userID}}" translate>MYPLACES</a></li>
+                  <li><a href="saved-places/{{userInfo.userID}}" translate>MYSAVEDPLACES</a></li>
+                  <li><a href="liked-places/{{userInfo.userID}}" translate>MY_LIKED_PLACES</a></li>
+                  <li><a href="history-places/{{userInfo.userID}}"  class="active" translate>HISTORY</a></li>
+                  <li><a href="settings" translate>SETTINGS</a></li>
+                </ul>
+              </div>
+                
+            </div><!--pills_left-->
+
+              <div class="pills_right">
+                  <div class="widget" ng-repeat="my_list in my_lists">
+                    <div class="row">
+                      <div class="col-sm-8">
+                        <div class="widget_img"><a href="/places-detail/{{my_list.placeID}}/{{my_list.placeName | nospace}}"><img ng-if="my_list.originalCoverPhoto" src="{{serverPath.image_path+my_list.originalCoverPhoto}}" on-error-src="{{serverPath.no_user_place}}" alt=""><img ng-if="!my_list.originalCoverPhoto" ng-src="{{serverPath.no_user_place}}" on-error-src="{{serverPath.no_user_place}}" alt=""></a></div>
+                        <div class="widget_center">
+                         <a href="/places-detail/{{my_list.placeID}}/{{my_list.placeName | nospace}}"><h2>{{my_list.placeName}}</h2></a>
+                          <h3>Status: {{my_list.orderType == '1' ? 'Preorder required' : 'Order Anytime'}}</h3>
+                         <p><i class="fa fa-map-marker"> </i> {{my_list.location}}</p>
+                        </div>
+                        
+                      </div>
+                      <div class="col-sm-4">
+                        <div class="top_Num text-right">
+                         <label for="">{{my_list.rating}}</label>
+                        </div>
+                        <div class="bottom_buttton text-right">
+                          <ul>
+                            <li><a href="javascript:void(0)" ng-click="(!checkedInLoader) ? checkedIn(my_list.placeID ,$index) : angular.noop()"><span class="fa fa-trash-o"></span></a></li>
+                          </ul>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                  <div ng-if="loadMore" class="text-center"></br><button ng-click="(!addMoreLoading) ? myLists('CHECKED_PLACES') : angular.noop">{{(!addMoreLoading) ? 'Add More' : '...Loading'}}</button>
+                  </div>
+                  <div ng-if="my_lists.length == 0" class="text-center"><h2 translate>NO_RECORD_FOUND</h2></div>
+
+                 
+                  
+              </div><!--pills_right-->
+
+               </div>
+          </div>
+      </section>
+
+    </div>
+    <!--Main container sec end-->
+    <!--Footer sec start-->
+
+    <div id="back-top">
+      <a href="#top">
+          <i class="fa fa-arrow-up"></i>
+      </a>
+    </div>
+    <!--Footer sec end-->
+  </main>
+
+

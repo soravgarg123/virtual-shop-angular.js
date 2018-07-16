@@ -1,0 +1,548 @@
+
+    <!--Main container sec start-->
+    <div class="main_container" ng-init="placeDetail();commentList();">
+        <section class="banner_content">
+          <div class="container">
+          <div class="banner" >
+          <img ng-if="details.originalCoverPhoto" src="{{serverPath.image_path+details.originalCoverPhoto}}" on-error-src="{{serverPath.no_user_banner}}" alt="">
+          <img ng-if="!details.originalCoverPhoto" ng-src="{{serverPath.no_user_banner}}" alt="">
+            
+          </div>
+
+          <div class="banner_row1 widget" >
+
+                <div class="row" >
+                  <div class="col-sm-8">
+                    <div class="widget_img"><img ng-if="details.placesPhotos[0].originalPhoto" src="{{serverPath.image_path+details.placesPhotos[0].originalPhoto}}" on-error-src="{{serverPath.no_user_place}}" alt="">
+                    <img ng-if="!details.placesPhotos[0].originalPhoto" src="{{serverPath.no_user_place}}" alt="">
+                    </div>
+                    <div class="widget_center">
+                      <h2>{{details.name}}</h2>
+                      <p>{{details.placesLocation[0].location}}</p>
+                      
+                      <h3>Status: {{details.orderType=='1' ? 'Preorder required' : 'Order Anytime' }}</h3>
+                      <p>{{details.descprition}}</p>
+                    </div>
+                    
+                  </div>
+                  <div class="col-sm-4 ">
+                     <ul class="list-inline top_list text-right">
+                       <li class="list-inline-item "> 
+                        <a class="nav-link" href="javascript:void(0)" ng-if="details.isLiked==1" ng-click="(!placeLikeLoader) ? placeLike(details.placeID, $index, 'deta') : angular.noop()" class="like_btn"><i class="fa fa-heart"></i>
+                        </a>
+                        <a class="nav-link" href="javascript:void(0)" ng-if="!details.isLiked==1" ng-click="(!placeLikeLoader) ? placeLike(details.placeID, $index, 'deta') : angular.noop()" class="like_btn liked" ><i class="fa fa-heart-o"></i>
+                        </a>
+                      </li>
+
+                      <li class="list-inline-item top_Num "> 
+
+                        <a class="nav-link" href="javascript:void(0)" data-toggle="modal" ng-click=" ratePlace('rate')" id="rateBtn"> <u translate>RATE_US</u>  <label for="">{{details.rating}}</label> </a>
+                      </li>
+
+                    </ul>
+                    <div class="bottom_buttton text-right">
+                      <ul>
+                        <li><a href="javascript:void(0)" id="addListBtn" data-toggle="modal" ng-click="addLists('addList',details.placeID)" ><i class="fa fa-plus-circle"></i>Add to List</a></li>
+                        <li><button type="button" ng-if="details.isSaved==1" ng-click="(!placeSaveLoader) ? placeSave(details.placeID, $index, 'detail') : angular.noop()" class="btn btn-primary btn-block btn-sm theme_btn" translate>UNSAVE</button>
+                        <button type="button" ng-if="!(details.isSaved==1)" ng-click="(!placeSaveLoader) ? placeSave(details.placeID, $index, 'detail') : angular.noop()" class="btn btn-primary btn-block btn-sm theme_btn" translate>SAVE</button></li>
+                        <li><button type="button" class="btn btn-primary btn-block btn-sm theme_btn" id="sharBtn" ng-click="shareUrl('sharModal',details.placeID,details.userID,details.name)" translate>SHARE</button></li>
+                      </ul>
+                      
+                    </div>
+                  </div>
+                </div>
+                 
+          </div><!--banner_row1-->
+
+          <div class="banner_row1 row2 widget" >
+                <div class="row" >
+                  <div class="col-sm-7" >
+                    <div class="widget_img"><img ng-if="details.placesPhotos[0].originalPhoto" src="{{serverPath.image_path+details.placesPhotos[0].originalPhoto}}" on-error-src="{{serverPath.no_user_place}}"  alt="">
+                    <img ng-if="!details.placesPhotos[0].originalPhoto" src="{{serverPath.no_user_place}}" alt=""></div>
+                    <div class="widget_center">
+                      <h2>{{details.name}}</h2>
+                      <div  ng-repeat="detail in details.placesLocation">
+                      <p>{{detail.location}}</p>
+                      <a href="https://www.google.co.in/maps/dir/{{detail.location}}/@{{detail.longitude}},{{detail.latitude}}"  target="_blank" translate>GET_DIRECTIONS</a>
+                     </div>
+
+                      <button type="button" ng-click="(!placeCheckinLoader) ? checkIn() : angular.noop()" class="btn btn-primary  btn-sm theme_btn"><p style="color: white;" >{{(details.isCheckedIn==1) ? 'Checked in' : 'Check in' }}</p></button>
+                      <button type="button" id="reportPlacBtn" ng-click="reportPlace('report')" class="btn btn-primary  btn-sm theme_btn" translate>REPORT_PLACE</button>
+                    </div>
+                  </div>
+                  <div class="col-sm-5">
+                    <ul class="addr">
+                      <li>
+                        <i class="fa fa-clock-o"></i>Mon - {{details.mondayStartTime}}AM-{{details.mondayEndTime}}PM <a href="javascript:void(0)" id="lessBtn" translate>SHOW_MORE</a>
+                        <ul style="display: none;">
+                          <li>Tue - {{details.tuesdayStartTime}}AM-{{details.tuesdayEndTime}}PM</li>
+                          <li>Wed - {{details.wenesdayStartTime}}AM-{{details.wenesdayEndTime}}PM</li>
+                          <li>Thu - {{details.thursdayStartTime}}AM-{{details.thursdayEndTime}}PM</li>
+                          <li>fri - {{details.fridayStartTime}}AM-{{details.fridayEndTime}}PM</li>
+                          <li>Sat - {{details.saturdayStartTime}}AM-{{details.saturdayEndTime}}PM</li>
+                          <li>Sun - {{details.sundayStartTime}}AM-{{details.sundayEndTime}}PM</li>
+                        </ul>
+                  
+                      </li>
+                      <li><i class="fa fa-phone"></i> <a href="#">+{{details.phoneNo}}</a></li>
+                      <li><i class="fa fa-whatsapp"></i> <a href="#">+{{details.whatsAppNo}}</a></li>
+                      <li><i class="fa fa-envelope-o"></i>  <a href="#">{{details.email}}</a></li>
+                     <!--  <li><i class="fa fa-globe"></i>  <a href="#">zumarestaurant.com</a></li> -->
+                      <li><i class="fa fa-facebook"></i>  <a href="#">{{details.facebookURL}}</a></li>
+                      <li><i class="fa fa-twitter"></i>  <a href="#">@{{details.twitterURL}}</a></li>
+                    </ul>
+                  </div>
+              </div>
+          </div><!--banner_row1-->
+        </div>
+        </section>
+
+        <section class="tmnl_slider_sec">
+          <div class="container">
+            <h4 translate>PHOTOS</h4>
+            <div class="clearfix tmnl_slider"  
+  slick-slider="{dots: false, arrows: true, draggable: 
+  false, slidesToShow:4, infinite:false}">
+            <!-- <slick dots="true"  class="tmnl_slider" infinite="false" speed="300" slides-to-show="5" touch-move="true" slides-to-scroll="3"> -->
+            <div class="my-slide tmnl_slider_item" ng-repeat="detail in details.placesPhotos">
+                   <a href="{{serverPath.image_path+detail.originalPhoto}}"  ><img ng-if="detail.originalPhoto"  ng-src="{{serverPath.image_path+detail.originalPhoto}}" on-error-src="{{serverPath.no_user_banner}}" alt=""/>
+                   <img ng-if="!detail.originalPhoto"  ng-src="{{serverPath.no_user_banner}}" alt=""/></a>
+            </div>
+  
+            </div>
+            <div>
+              <a class="btn btn-primary  btn-sm theme_btn" href="javascript:void(0)" ng-click="addPlacephoto()" translate><i class="fa fa-camera btnIcon" ></i>ADD_PHOTO</a> 
+              <input type="file" name="photos" file-model = "myFile" id="photos" onchange="angular.element(this).scope().placePhoto(this)" style="display: none;">
+            </div>
+          </div>
+        </section>
+
+
+        <section class="comment_sec">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-9">
+                      <div class="form-group inputIcon">
+
+                        <input type="text" class="form-control"  id="comment" ng-model="Comment" placeholder="Add comment" required="required">
+                        <a class="clear" ng-click="Comment = null">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                       <input type="file" name="originalCommentImage" file-model = "myFile" id="originalCommentImage" style="display: none;"> 
+                       <i class="fa fa-camera" ng-click="addCommentImage()"></i>
+                      
+
+                      </div>
+                    </div>
+                    <div class="col-sm-3">
+                      <button type="button" ng-click="addComment()" class="btn btn-primary  btn-sm theme_btn" translate>SUBMIT</button>
+                    </div>
+                </div>
+                <div class="commnt_nav">
+                  
+                  <!-- <ul class="list-inline">
+                    <li class="list-inline-item"><a href="#" translate>SORT_BY</a></li>
+                    <li class="list-inline-item">
+                      <div class="dropdown">
+                        <button class="dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="true" translate>RECENT<span class="caret"></span></button>
+                        <div class="dropdown-menu" x-placement="bottom-start" >
+                              <a class="dropdown-item" href="#" translate>RECENT</a>
+                              <a class="dropdown-item" href="#" translate>POPULAR</a>
+                        </div>
+                      </div>
+                    </li> 
+                  </ul> -->
+                </div>
+                    <div class=" widget"  ng-repeat="comm_Lists in comm_List">
+                        <div class="row" >
+                          <div class="col-sm-12" >
+                            <div class="widget_img"> <a href="/my-profile/{{comm_Lists.userID}}"><img ng-if="comm_Lists.thumbImagePath" ng-src="{{serverPath.image_path+comm_Lists.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}"  alt="" class="img-fluid img-thumbnail img-responsive">
+
+                            <img ng-if="!comm_Lists.thumbImagePath" ng-src="{{serverPath.no_user_image}}"   alt="" class="img-fluid img-thumbnail img-responsive"></a></div>
+                            <div class="widget_center db">
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <a href="/my-profile/{{comm_Lists.userID}}"><h2>{{comm_Lists.userFirstName}}</h2></a>
+                                  
+                                </div>
+                                <div class="col-sm-6">
+                                   <div class="text-right">
+                                    <label >  {{comm_Lists.dateTime | asDate | date:"medium" }}</label>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-8">
+                                <p>{{comm_Lists.comment}}</p>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-sm-3">
+                                  <div class="widBigImgPar " ng-if="comm_Lists.originalCommentImage">
+                                  <a href="javascript:void(0)" ng-click="test(comm_Lists.originalCommentImage)"   >
+                                   <img  ng-src="{{serverPath.image_path+comm_Lists.originalCommentImage}}" class="img-fluid img-thumbnail img-responsive" >
+                                   </a>
+                                  
+                                 </div>
+                                 <div class="widBigImgPar " ng-if="!comm_Lists.originalCommentImage">
+                                  <a href="javascript:void(0)" ng-click="test(comm_Lists.originalCommentImage)"   >
+                                   
+                                  </a>
+                                  
+                                  </div>
+                                </div>
+                              </div>
+                            <div class="bottom_buttton listParFlex">
+                              <ul class="list-inline top_list ">
+                               <li class="list-inline-item "> 
+                                <a ng-if="comm_Lists.is_comment_like==1" href="javascript:void(0)" ng-click="(!likeCommentLoader) ? likeComment(comm_Lists.commentID, $index) : angular.noop()" class="like_btn"><i class="fa fa-heart"></i>
+                                </a>
+                                 <a ng-if="!(comm_Lists.is_comment_like==1)" href="javascript:void(0)" ng-click="(!likeCommentLoader) ? likeComment(comm_Lists.commentID, $index) : angular.noop()" class="like_btn liked"><i class="fa fa-heart-o"></i>
+                                </a>
+
+                              </li>
+
+                              <li class="list-inline-item pull-right pr-2"> 
+                                <a class="" href="javascript:void(0)" ng-click="(!commentDeleteLoader) ? deleteComment(comm_Lists.commentID, $index) : angular.noop()" ><i class="fa fa-trash-o"></i><label translate>DELETE_COMMENT</label></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                        
+
+                         
+                  </div><!--widget-->
+<!-- 
+                  
+                         
+                  </div> --><!--widget-->
+                  <div ng-if="loadMore" class="text-center"></br><button  class="btn btn-primary  btn-sm theme_btn" ng-click="(!commentListLoader) ? commentList() : angular.noop">{{(!commentListLoader) ? 'Add More' : '...Loading'}}</button></div>
+                      <div ng-if="comm_List.length == 0" class="text-center"><h2 translate>NO_RECORD_FOUND</h2></div>
+              </div><!--col-sm-9-->
+              
+              </div>
+
+              
+            </div>
+         
+        </section>
+    </div>
+    <!--Main container sec end-->
+ 
+
+ <!-- sm_modal start-->
+  <div class="modal fade sm_modal modal-center "  id="addListViwe">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h5 class="modal-title" id="exampleModalLabel" translate>ADD_TO_LIST</h5>
+         
+        </div>
+        <div class="modal-body ">
+          <div class="creatList">
+            <a href="#" translate><i class="fa fa-plus-circle"></i> CREATE_A_NEW_LIST</a>
+            <div class="creatInputform">
+              <div class="creatInput">
+                <input type="text" class="form-control" ng-model="name" name="name" placeholder="Type a Name">
+                
+              </div>
+            </div>
+            
+          </div>
+        <div class="text-right">
+           <button class="btn btn-sm btn-primary theme_btn theme_dark"  data-dismiss="modal" aria-label="Close" translate>CANCEL</button>
+          <button class="btn btn-sm btn-primary theme_btn ml5" ng-click="(!createMylistLoader) ? createMylist() : angular.noop() " data-dismiss="modal" >Done</button>
+        </div>
+         
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  <!--sm_modal end-->
+  
+
+
+ 
+
+
+
+
+ <!-- sm_modal start-->
+ 
+<!-- sm_modal end-->
+
+
+<!-- sm_modal start-->
+ <div class="modal fade sm_modal modal-center "  id="report" >
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header text-center">
+           <h5 class="modal-title" id="exampleModalLabel" translate>REPORT_A_PLACE</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">×</span>
+           </button>
+         </div>
+         <div class="modal-body">
+         <form id="reportPlaceForm" name="reportPlaceForm" ng-submit="addReport()">
+           <div class="delete_par">
+             <p translate>PLEASE_CHOOSE_THE_BEST_POSSIBLE_OPTION_TO_REPORT</p>
+             <ul>
+                 <li> 
+                   <div class="radio">
+                   <input name="optradio2" type="radio" ng-model="reportPlaceReason" value="ABUSIVE">
+                   <label translate>ABUSIVE</label>
+                   </div>
+                 </li>
+   
+                 <li> 
+                   <div class="radio">
+                   <input name="optradio2" type="radio" ng-model="reportPlaceReason" value="SPAM">
+                   <label translate>SPAM</label>
+                   </div>
+                 </li>
+   
+                 <li> 
+                   <div class="radio">
+                   <input name="optradio2" type="radio" ng-model="reportPlaceReason" value="FAKE_INFORMATION">
+                   <label translate>FAKE_INFORMATION</label>
+                   </div>
+                 </li>
+   
+                 <li> 
+                   <div class="radio">
+                   <input name="optradio2" type="radio" ng-model="reportPlaceReason" value="HARASSMENT">
+                   <label translate>HARASSMENT</label>
+                   </div>
+                 </li>
+   
+                 <li> 
+                   <div class="radio">
+                   <input name="optradio2" type="radio" ng-model="reportPlaceReason" value="OTHER">
+                   <label translate>OTHER</label>
+                   </div>
+                 </li>
+                 <span class="error-msgs" ng-show="reportPlaceForm.reportPlaceReason.$dirty && reportPlaceForm.reportPlaceReason.$invalid" translate>PLEASE_SELECT_REASON</span>
+             </ul>
+           
+           <div>
+             <textarea class="form-control" rows="3" placeholder="Type your reason..." ng-model="reasonText" name="message" maxlength="160" required></textarea>
+            <span>{{160 - reasonText.length}}</span>
+              <span class="error-msgs" ng-show="reportPlaceForm.message.$dirty && reportPlaceForm.message.$invalid" translate>PLEASE_TYPE_YOUR_TEXT</span>
+           </div>
+             
+   
+            </div>
+            <div class="text-right">
+               <button class="btn btn-sm btn-primary theme_btn theme_dark"  data-dismiss="modal" aria-label="Close" translate>CANCEL</button>
+               <button type="submit" class="btn btn-sm btn-primary theme_btn"   ng-disabled="reportPlaceForm.$invalid || placeReportLoader" disabled="disabled" data-dismiss="modal"><span ng-if="placeReportLoader" translate><i class="fa fa-circle-o-notch fa-spin" ></i></span>DONE</button>
+            </div>
+   
+            </form>
+               
+         </div>
+   
+       </div>
+     </div>
+   </div> 
+
+     
+      <!--sm_modal start -->
+    <div class="modal fade sm_modal modal-center "  id="addList" >
+    <div class="modal-dialog" role="document" >
+  <div class="modal-content">
+    <div class="modal-header text-center">
+      <h5 class="modal-title" id="exampleModalLabel" translate>ADD_TO_LIST</h5>
+    </div>
+    <div class="modal-body " ng-init="getMylisting()">
+      <div class="creatList">
+        <a  href="javascript:void(0)" id="addListViweBtn" ng-click="addListViews('addListViwe')" translate><i class="fa fa-plus-circle"></i> CREATE_A_NEW_LIST</a>
+      <div class="widget" ng-repeat="getLists in getList" ng-if="getLists.create_list != 1">
+        <div class="row aItemC" >
+            <div class="col-sm-9" >
+              <div class="widget_img"><img ng-if="getLists.originalCoverPhoto" ng-src="{{getLists.originalCoverPhoto}}" on-error-src="{{serverPath.no_user_image}}" alt="">
+              <img  ng-if="!getLists.originalCoverPhoto"  ng-src="{{serverPath.no_user_image}}" alt=""/></div>
+              <div class="widget_center">
+                <h2>{{getLists.name}}</h2>
+                <span>{{getLists.total_count}}</span>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="list_icon text-right">
+                <a href="javascript:void(0)" ng-click="(!addMylistLoader) ? addMylist(getLists.placesMyListID,$index,placeID) : angular.noop()"><i class="fa fa-plus-circle"></i></a>
+              </div>
+            </div>
+          </div>
+
+      </div>
+        
+      </div>
+    <div class="text-right">
+       <button class="btn btn-sm btn-primary theme_btn theme_dark"  data-dismiss="modal" aria-label="Close" translate>CANCEL</button>
+      <button class="btn btn-sm btn-primary theme_btn ml5" translate>DONE</button>
+    </div>
+     
+    </div>
+    
+  </div>
+    </div>
+    </div>  <!-- sm_modal end-->
+     <div class="modal fade   sm_modal modal-center "  id="rate"  >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+         
+          <div class="modal-body text-center">
+             <div class="head text-center">
+            <h5 class="modal-title" id="exampleModalLabel" translate>RATE_US</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+            <div class="smil_icon"><img src="./../../front/img/smile.png" alt=""></div>
+            <div class="rating_par">
+              <h4 translate>HOW_LIKELY_ARE_YOU_TO_RECOMMEND_THIS</h4>
+              <h4 translate>PLACE_TO_YOUR_FRIENDS_OR_COLLEAGUES</h4>
+
+                         <!-- RATING - Form -->
+              <form class="rating-form" id="rateUsForm" name="rateUsForm" method="post">
+             
+                  
+                  <div class="form-item">
+                    
+                    <input id="rating-5" name="rating" type="radio" ng-model="ratingUs" value="5" />
+                    <label for="rating-5" data-value="5">
+                      <span class="rating-star">
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star"></i>
+                      </span>
+                      <!-- <span class="ir">5</span> -->
+                    </label>
+                    <input id="rating-4" name="rating" type="radio" ng-model="ratingUs" value="4" />
+                    <label for="rating-4" data-value="4">
+                      <span class="rating-star">
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star"></i>
+                      </span>
+                      <!-- <span class="ir">4</span> -->
+                    </label>
+                    <input id="rating-3" name="rating" type="radio" ng-model="ratingUs" value="3" />
+                    <label for="rating-3" data-value="3">
+                      <span class="rating-star">
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star"></i>
+                      </span>
+                      <!-- <span class="ir">3</span> -->
+                    </label>
+                    <input id="rating-2" name="rating" type="radio" ng-model="ratingUs" value="2" />
+                    <label for="rating-2" data-value="2">
+                      <span class="rating-star">
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star"></i>
+                      </span>
+                      <!-- <span class="ir">2</span> -->
+                    </label>
+                    <input id="rating-1" name="rating" type="radio" ng-model="ratingUs" value="1" />
+                    <label for="rating-1" data-value="1">
+                      <span class="rating-star">
+                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star"></i>
+                      </span>
+                      <!-- <span class="ir">1</span> -->
+                    </label>
+                    
+                    <!--       <div class="form-action">
+                            <input class="btn-reset" type="reset" value="Reset" />   
+                          </div>
+
+                          <div class="form-output">
+                            ? / 5
+                          </div>
+                           -->
+                  </div>
+                  
+             
+              </form>
+             </div>
+            
+               
+                <button  type="submit" class="btn btn-sm btn-primary theme_btn " 
+                ng-click="(!rateUsLoader) ? rateUs(details.placeID) : angular.noop()" data-dismiss="modal" translate>RATE_US<font face="arial"></font></button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="modal fade  modal-center" id="sharModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content privacy">
+      <div class="modal-header text-center">
+        <h5 class="modal-title" id="exampleModalLabel" ><label translate>SHARE</label>{{details.name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body ">
+        <div class="formpar">
+
+        
+          <ul>
+              <li><a href="https://www.facebook.com/sharer/sharer.php?u={{details.name}}" ><i class="fa fa-facebook-f" ></i><label translate>SHARE_ON_FACEBOOK</label></a></li>
+              <li><a href="https://twitter.com/intent/tweet?text={{details.name}}&url={{details.placeID}}/{{details.userID}}" class="twitterBg" ><i class="fa fa-twitter"></i><label translate>SHARE_ON_TWITTER</label></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="modal" id="showImageModal" popup-handler >
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" translate>IMAGE</h4>
+          <button type="button" class="close" data-dismiss="modal" ng-click="closePopup('showImageModal')">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <img ng-if="image" ng-src="{{serverPath.image_path}}{{image}}" class="img-fluid img-thumbnail img-responsive" >
+          <img ng-if="!image"  class="img-fluid img-thumbnail img-responsive">
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" ng-click="closePopup('showImageModal')" data-dismiss="modal" translate>CLOSE</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+<!-- sm_modal end-->
+<script>
+  $('#addListBtn').on('click', function () {
+    $('#addList').modal('show').css("z-index","1111"); 
+    $('#addListViweBtn').on('click', function () {
+      $('#addList').modal('hide').css("z-index","1111"); 
+    $('#addListViwe').modal('show').css("z-index","1111"); 
+  });
+
+  });
+  
+
+$('#reportPlacBtn').on('click', function () {
+   $('#report').modal('show').css("z-index","1111"); 
+  });
+$('#rateBtn').on('click', function () {
+   $('#rate').modal('show').css("z-index","1111"); 
+  });
+$('#sharBtn').on('click', function () {
+   $('#sharModal').modal('show').css("z-index","1111"); 
+  });
+
+</script>

@@ -1,0 +1,39 @@
+<div id="content" ng-controller="userCtrl">
+<div id="content-header">
+  <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="javascript:void(0)" class="current">Category</a> </div>
+  <h1>Add New Category</h1>
+</div>
+    <div class="container-fluid">
+        <hr>
+        <a href="javascript:void(0)" class="btn btn-primary pull-right" ng-click="goBack();">Back</a>
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Category Form</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form method="post" novalidate class="form-horizontal" id="categoryForm" name="categoryForm" ng-submit="categoryForm.$valid && insertCategory()">
+            <center><span style="color:red" ng-if="errorMessage">{{ errorMessage }}</span>
+            <span style="color:green" ng-if="successMessage">{{ successMessage }}</span>
+            <div style="margin-top:10px;" class="loadersmall" ng-if="isLoading"></div></center>
+            <div class="control-group formWithbtn">
+              <label class="control-label">Name</label>
+              <div class="controls">
+                <input type="text"  class="span11" placeholder="Enter Name" name="name" ng-model="name" required/>
+                <span class="error-msgs" ng-show="categoryForm.name.$dirty && categoryForm.name.$invalid">
+                    <span ng-show="categoryForm.name.$error.required">Name is required.</span>
+                </span>
+              </div>
+               <center><button style="margin-bottom:10px;" type="submit" class="btn btn-success" ng-disabled="categoryForm.$invalid" disabled="disabled">Submit</button></center>
+            </div>
+           <!--  <div class="form-actions">
+             
+            </div> -->
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+</div>

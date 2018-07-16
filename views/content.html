@@ -1,0 +1,50 @@
+<div id="content" ng-controller="userCtrl">
+<div id="content-header">
+  <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="javascript:void(0)" class="current">Content</a> </div>
+  <h1>Content Management</h1>
+</div>
+    <div class="container-fluid">
+        <hr>
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Content Management</h5>
+        </div>
+        <div class="widget-content nopadding">
+          <form method="post" novalidate class="form-horizontal" id="contentForm" name="contentForm" ng-submit="updateContent()">
+            <center><span style="color:red" ng-if="errorMessage">{{ errorMessage }}</span>
+            <span style="color:green" ng-if="successMessage">{{ successMessage }}</span>
+            <div style="margin-top:10px;" class="loadersmall" ng-if="isLoading"></div></center>
+            <div class="control-group">
+              <label class="control-label">Content Type</label>
+              <div class="controls">
+                <select class="form-control1" name="contentType" ng-model="contentType" required="" ng-change="getContentDetails()">
+                  <option value="">Select Type</option>
+                  <option value="ABOUT_US">About US</option>
+                  <option value="HELP_SUPPORT">Help & Support</option>
+                  <option value="FAQ">FAQ</option>
+                  <option value="PRIVACY_POLICY">Privacy Policy</option>
+                  <option value="TERMS_CONDITIONS">Terms & Conditions</option>
+                </select>
+                <span class="error-msgs" ng-show="contentForm.contentType.$dirty && contentForm.contentType.$invalid">
+                    <span ng-show="contentForm.contentType.$error.required">Please select content type</span>
+                </span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Content</label>
+              <div class="controls">
+                <div text-angular="text-angular" name="htmlcontent" ng-model="htmlcontent" ta-disabled='disabled'></div>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success" ng-click="updateContent()">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+</div>

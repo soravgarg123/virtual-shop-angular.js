@@ -1,0 +1,106 @@
+<main class="animsition" ng-init="editProfile()">
+  <!--Main container sec start-->
+  <div class="main_container edit_profile">
+    <section class="pills_sec">
+      <div class="container">
+        <div class="pills_par clearfix">
+          <div class="pills_left">
+            <div class="pills_head">
+              <div class="box_left">
+                <div class="box_left_user">
+                  <img alt="" ng-if="profileInfo.thumbImagePath" ng-src="{{serverPath.image_path+profileInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}">
+                  <img alt="" ng-if="!profileInfo.thumbImagePath && profileInfo.thumbImagePath" ng-src="{{serverPath.image_path+profileInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                   <img alt="" ng-if="!(profileInfo.thumbImagePath && userInfo.imagePath)" ng-src="{{serverPath.no_user_image}}" >
+                </div>
+              </div>
+              <div class="box_center text-center">
+                {{(userInfo.userFirstName) ? userInfo.userFirstName+' '+userInfo.userLastName : userInfo.userEmailID}}
+              </div>
+              <div class="box_right text-center">
+                <a href="edit-profile">Edit</a>
+              </div>
+            </div><!--pills_head-->
+            <div class="pills_nav text-right">
+              <ul>
+                <li><a href="my-places/{{userInfo.userID}}" translate>MYPLACES</a></li>
+                <li><a href="saved-places/{{userInfo.userID}}" translate>MYSAVEDPLACES</a></li>
+                <li><a href="liked-places/{{userInfo.userID}}" translate>MY_LIKED_PLACES</a></li>
+                <li><a href="history-places/{{userInfo.userID}}" translate>HISTORY</a></li>
+                <li><a href="settings" translate>SETTINGS</a></li>
+              </ul>
+            </div>
+          </div><!--pills_left-->
+          <div class="pills_right">
+            <form id="editprofileform" name="editprofileform" novalidate ng-submit="profileUpdate()">
+              <div class="user_img" ng-click="uploadImage()">
+                <img alt="" ng-if="profileInfo.thumbImagePath && imageLoader" ng-src="{{serverPath.image_path+profileInfo.thumbImagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                <img alt="" ng-if="(!profileInfo.thumbImagePath && profileInfo.imagePath) && imageLoader" ng-src="{{serverPath.image_path+profileInfo.imagePath}}" on-error-src="{{serverPath.no_user_image}}" >
+                <img alt="" ng-if="!(profileInfo.thumbImagePath && profileInfo.imagePath) && imageLoader" ng-src="{{serverPath.no_user_image}}" >
+                <h1 ng-if="!imageLoader" style="font-size: 100px;"><i class="fa fa-circle-o-notch fa-spin" ></i></h1>
+                <a class="nav-link" href="javascript:void(0)" translate><i class="fa fa-plus-circle"></i>CHANGE_PHOTOS</a>
+                <input type="file" name="userImage" file-model = "myFile" id="userImage" onchange="angular.element(this).scope().profileImageUpload(this)"  style="display: none;">
+              </div> 
+
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="First Name" required ng-model="profileInfo.userFirstName" name="userFirstName">
+                <span class="error-msgs" ng-show="editprofileform.userFirstName.$dirty && editprofileform.userFirstName.$invalid">
+                  <span ng-show="editprofileform.userFirstName.$error" translate>PLEASE_ENTER_FIRST_NAME</span>
+                  
+                </span>
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Last Name" required ng-model="profileInfo.userLastName" name="userLastName">
+                <span class="error-msgs" ng-show="editprofileform.userLastName.$dirty && editprofileform.userLastName.$invalid">
+                  <span ng-show="editprofileform.userLastName.$error">PLEASE_ENTER_LAST_NAME</span>
+                 
+                </span>
+              </div>
+
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Email id" ng-model="profileInfo.userEmailID" name="userEmailID" readonly="">
+                
+              </div> 
+
+              <div class="form-group">
+                <input type="text" class="form-control" placeholder="Date of Birth" id="userDOB" name="userDOB" required id="date" ui-date="dateOptions" ng-model="aDate" ng-focus="onlyRead()" >
+                <span class="error-msgs" ng-show="editprofileform.userDOB.$dirty && editprofileform.userDOB.$invalid">
+                  <span ng-show="editprofileform.userDOB.$error" translate>PLEASE_ENTER_DATE_OF_BIRTH</span>
+                  
+                </span>
+              </div>  
+
+              <div class="form-group">
+                <textarea placeholder="Biography" class="form-control" rows="4" ng-model="profileInfo.userDescprition" name="userDescprition" maxlength="160" required></textarea>
+                <span>{{ 160  - profileInfo.userDescprition.length}} remaining</span>
+                <span class="error-msgs" ng-show="editprofileform.userDescprition.$dirty && editprofileform.userDescprition.$invalid">
+                  <span ng-show="editprofileform.userDescprition.$error" translate>PLEASE_ENTER_BIOGRAPHY</span>
+                  
+                </span>
+              </div>
+
+              <div class="radio_box">
+                <label>Gender {{$scope.profileInfo.userGender}}</label>
+                <div class="radio">
+                  <input name="optradio1" type="radio" ng-model="profileInfo.userGender" name="userGender" ng-value="1" required>
+                    <label translate>MALE</label>
+                </div>
+
+                <div class="radio">
+                  <input name="optradio1" type="radio" ng-model="profileInfo.userGender" name="userGender" ng-value="2" required>
+                    <label translate>FEMALE</label>
+                </div>
+                <span class="error-msgs" ng-show="editprofileform.userGender.$dirty && editprofileform.userGender.$invalid">
+                  <span ng-show="editprofileform.userGender.$error" translate>PLEASE_SELECT_GENDER</span>
+                  
+                </span>
+              </div>
+              <button type="submit" class="btn btn-sm btn-primary theme_btn" ng-disabled="editprofileform.$invalid || updateProfileLoader" disabled="disabled" translate><span ng-if="updateProfileLoader"><i class="fa fa-circle-o-notch fa-spin" ></i></span>SAVE</button>
+            </form>
+          </div><!--pills_right-->
+        </div>
+      </div>
+    </section>
+  </div>
+  <!--Main container sec end-->
+</main>

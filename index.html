@@ -1,0 +1,173 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en" data-ng-app="LAMMAH">
+    
+<head>
+        <title>LAMMAH {{currentPath == 'admin' ? 'Admin' : ''}}</title><meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <base href="/">
+        <link rel="stylesheet" href="css/jquery-ui.css">
+        <link ng-if="currentPath == 'admin'" href="vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
+        <link ng-if="currentPath == 'admin'" href="vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
+
+        <link ng-if="currentPath == 'admin'" href="vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
+        <!-- custom css -->
+        <link ng-if="currentPath == 'admin'" href="css/app.min.css" rel="stylesheet">
+
+     	<link ng-if="currentPath != 'admin'" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  		<link ng-if="currentPath != 'admin'" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,900" rel="stylesheet">
+  		<link ng-if="currentPath != 'admin'" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,700i,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900" rel="stylesheet">
+        <link ng-if="currentPath != 'admin'" href="css/angular-moment-picker.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="vendors/bower_components/slick-carousel/slick/slick.css">
+
+        <link ng-if="currentPath != 'admin'" href="css/slick.css" rel="stylesheet">
+	  	<link ng-if="currentPath != 'admin'" href="css/slick-theme.css" rel="stylesheet">
+	  	<link ng-if="currentPath != 'admin'" href="css/custom.css" rel="stylesheet">
+	  	<link ng-if="currentPath != 'admin'" href="css/responsive.css" rel="stylesheet">
+	  	<link ng-if="currentPath != 'admin'" href="css/animations.css" rel="stylesheet">
+      
+    </head>
+    <body  data-ng-controller="mainCtrl" class="{{loginContentClass}}" style="overflow: hidden;"  onload="myFunction()">
+    <!--Loader Start-->
+    <div class="loderBG" id="loderBG" ></div>
+	<div class="container" >
+	    <div class="row">
+	        <div id="loader">
+	            <div class="cube-wrapper">
+	                <div class="cube-folding">
+	                    <div class="cssload-container">
+	                        <div class="lds-ring">
+	                            <div></div>
+	                            <div></div>
+	                            <div></div>
+	                            <div></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            
+	        </div>
+	       
+	    </div>
+	  
+	</div>
+	<!--Loader END-->
+    <!--Loader Start-->
+    <div class="loderBG" id="loderBG" ng-if="isLoading"></div>
+	<div class="container" ng-if="isLoading">
+	    <div class="row">
+	        <div id="loader">
+	            <div class="cube-wrapper">
+	                <div class="cube-folding">
+	                    <div class="cssload-container">
+	                        <div class="lds-ring">
+	                            <div></div>
+	                            <div></div>
+	                            <div></div>
+	                            <div></div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	            <!-- cube-wrapper -->
+	        </div>
+	        <!-- loader -->
+	    </div>
+	  <!-- row -->
+	</div>
+		<!--Loader END-->
+        
+        <div ng-include="'views/inner-header.html'" ng-if="isloggedIn && userType == '1'"></div> <!-- ADMIN HEADER -->
+        
+        <div ng-include="'views/inner-sidebar.html'" ng-if="isloggedIn && userType == '1'"></div> <!-- ADMIN SIDEBAR-->
+        
+        <div ng-include="'views/front/header.html'" ng-if="!(isloggedIn && userType == '0') && currentPath != 'admin'"></div> <!-- FRONT HEADER -->
+        <div ng-include="'views/front/inner-header.html'" ng-if="(isloggedIn && userType == '0') && currentPath != 'admin'"></div> <!-- FRONT HEADER -->
+            
+        <ui-view></ui-view> <!-- UI ROUTER-->
+        
+        <div ng-include="'views/front/footer.html'" ng-if="currentPath != 'admin'"></div> <!-- FRONT FOOTER-->
+        <div ng-include="'views/inner-footer.html'" ng-if="isloggedIn && userType == '1'"></div><!-- ADMIN FOOTER-->
+  
+        <!--alert box-->
+        <div id="messageShow" ng-show="messageType" class="alert" ng-class="(messageType == 'Success') ? 'success' : ''" style="display: none;">
+            <span class="closebtn" ng-click="close()">×</span> 
+            <strong>{{messageType}}!</strong> {{message}}
+        </div>
+
+       
+
+        <script>
+        console.log('hjjh')
+            /*code for versioning of css and js files*/
+            var jsVersion = parseInt(Math.random() * 1000000000);
+            var script = document.querySelectorAll('[data-version]');
+            var link = document.querySelectorAll('[data-version]');
+            for (var int = 0; int < link.length; int++) {
+                link[int].href = link[int].href + "?ver=" + jsVersion;
+            }
+            for (var int = 0; int < script.length; int++) {
+                script[int].src = script[int].src + "?ver=" + jsVersion;
+            }
+            /*code for versioning of css and js files*/
+        </script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="vendors/bower_components/jquery/dist/jquery.min.js"></script><!-- JQUERY -->
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <!-- <script ng-if="currentPath == 'admin'" src="vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script ng-if="currentPath == 'admin'" src="vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script ng-if="currentPath == 'admin'" src="vendors/bootstrap-growl/bootstrap-growl.min.js"></script> -->
+
+        <!-- FRONT CUSTOM SCRIPT -->
+        <script ng-if="currentPath != 'admin'" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script> 
+		<script ng-if="currentPath != 'admin'" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script> 
+
+
+        
+        <script src="js/angular.js"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOBJnE-Wl0_V_xfJhkVg29-sQEYJTdy_0&libraries=places"></script>
+        <script ng-if="currentPath != 'admin'" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOBJnE-Wl0_V_xfJhkVg29-sQEYJTdy_0&libraries=places"></script>
+        <script ng-if="currentPath != 'admin'" src="http://jvandemo.github.io/angularjs-google-maps/dist/angularjs-google-maps.js"></script>
+        <script ng-if="currentPath != 'admin'" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment-with-locales.js"></script>
+        <script ng-if="currentPath != 'admin'" src="js/angular-moment-picker.min.js"></script>
+
+        
+        <script type="text/javascript" src="js/date.js"></script>
+        <script src="js/angular-route.min.js"></script>
+        <script src="app.js" data-version="update"></script>
+        <script src="config.js" data-version="update"></script>
+        <script src="js/directive/directive.js" data-version="update"></script>
+        <script src="js/services/services.js" data-version="update"></script>
+
+        <!-- FRONT CUSTOM SCRIPT -->
+        <script src="js/controllers/front/homeCtrl.js" data-version="update"></script>
+        <script src="js/controllers/front/loginController.js" data-version="update"></script>
+       
+
+        
+
+        <!-- ADMIN CUSTOM SCRIPT -->
+        <script src="js/controllers/mainctrl.js" data-version="update"></script>
+        <script  ng-if="currentPath == 'admin'" src="js/controllers/loginCtrl.js" data-version="update"></script>
+        <script  ng-if="currentPath == 'admin'" src="js/controllers/userCtrl.js" data-version="update"></script>
+       <!--  <script src="js/functions.js"></script> -->
+        <script src="js/demo.js"></script>
+        
+
+        <script ng-if="currentPath != 'admin'" src="js/slick.min.js"></script>
+        <script ng-if="currentPath != 'admin'" src="js/custom.js"></script>
+        
+
+  <script src="vendors/bower_components/slick-carousel/slick/slick.min.js"></script>
+<script src="vendors/bower_components/angular-slick/dist/slick.js"></script>
+<script src="vendors/bower_components/angular-translate/angular-translate.js"></script>
+<script src="vendors/bower_components/angular-translate/angular-translate.min.js"></script>
+<script src="https://rawgithub.com/angular-translate/bower-angular-translate-storage-cookie/master/angular-translate-storage-cookie.js"></script>
+<script src="https://rawgithub.com/angular-translate/bower-angular-translate-loader-static-files/master/angular-translate-loader-static-files.js"></script>
+
+
+    </body>
+</html>

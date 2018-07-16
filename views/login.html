@@ -1,0 +1,40 @@
+<div class="lc-block toggled" id="l-login" >   
+    <div class="control-group normal_text"> <h3 class="mazoom-title">LAMMAH Admin Panel</h3></div>   
+    <div class="lcb-float"><i class="zmdi zmdi-pin-account"></i></div>      
+    <form id="loginform" novalidate class="form-vertical" name="loginForm" ng-submit="login()">
+	
+        <center>
+            <span style="color:red" ng-if="errorMessage">{{ errorMessage }}</span>
+            <span style="color:green" ng-if="successMessage">{{ successMessage }}</span>
+            <div style="margin-top:10px;" class="loadersmall" ng-if="isLoading"></div>
+        </center>
+        <div class="form-group">
+            <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_lg"><i class="icon-user"> </i></span><input type="email" class="form-control" placeholder="Email Id" required ng-model="userEmail" name="userEmail" />
+                    <span class="error-msgs" ng-show="loginForm.userEmail.$dirty && loginForm.userEmail.$invalid">
+                        <span ng-show="loginForm.userEmail.$error.email">Please enter valid email address.</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls">
+                <div class="main_input_box">
+                    <span class="add-on bg_ly"><i class="icon-lock"></i></span><input type="password" placeholder="Password" class="form-control" name="userPassword" ng-model="userPassword" required />
+                    <span class="error-msgs" ng-show="loginForm.userPassword.$dirty && loginForm.userPassword.$invalid">
+                        <span ng-show="loginForm.userPassword.$error.required">Password is required.</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+           <center><button class="btn btn-success" ng-disabled="loginForm.$invalid" disabled="disabled">Login</button></center>
+        </div>
+    </form>
+</div>
+<style type="text/css">
+    .error-msgs span{
+        color: #fb4578;
+    }
+</style>    

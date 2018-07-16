@@ -1,0 +1,97 @@
+<main class="animsition home " ng-init="contentDetails()">
+  <!--Main container sec start-->
+  <div class="main_container  ">
+    <div class="banner-top  ">
+      <div class="tmnl_slider1">
+        <div class="banner_imgpar lh0">
+            <img src="img/banner1.jpg" alt="" width="100%">
+        </div>
+      </div>
+      <div class="banner_img_text text_lg">
+        <div class="container text-center text-uppercase">
+          <h4 translate>HELP_SUPPORT</h4>
+        </div>
+      </div>
+    </div><!--banner-top-->
+    <section class="accordion_sec">
+      <div class="container">
+        <div class="accordion_par">
+          <div class="row">
+            <div class="col-sm-10 offset-sm-1" >
+              <div class="row" >
+                <div class="col-sm-6" ng-repeat="detail in contentDetail">
+                  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="heading{{$index+1}}">
+                        <h4 class="panel-title">
+                          <a class="collapsed" ng-click="showAccordian($index)" data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" aria-expanded="{{detail.showStatus}}" aria-controls="collapse{{$index+1}}">
+                            <i class=" fa fa-caret-right"></i>  <span data-ng-bind-html="detail.title| to_trusted"></span>
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapse{{$index+1}}" class="panel-collapse collapse" ng-class="detail.showStatus ? 'show' : ''" role="tabpanel" aria-labelledby="heading{{$index+1}}" aria-expanded="false" >
+                        <div class="panel-body">
+                        <span data-ng-bind-html="detail.description| to_trusted"></span>
+                         
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div><!--col-sm-6-->
+              </div>
+              <div class="text-center botLInk">
+               Have a quick question? Contact our Support Team <a href="javascript:void(0)" data-toggle="modal" ng-click="contact('requestMo')" translate>CLICK_HERE</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </section>
+    </div>
+    <!--Main container sec end-->
+   
+
+  <!-- privacy_modal start-->
+    <div class="modal fade sm_modal  modal-center" id="requestMo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content privacy">
+          <div class="modal-header text-center">
+            <h5 class="modal-title" id="exampleModalLabel" translate>SUBMIT_REQUEST</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body  ">
+
+            <form name="contactForm" id="contactForm" novalidate ng-submit="contactSend('requestMo')">
+              <div class="form-group  passPar">
+                  <input type="text" class="form-control" placeholder="Name" name="name" ng-model="contactData.name" required>
+                  <span class="error-msgs" ng-show="contactForm.name.$dirty && contactForm.name.$invalid">
+                    <span ng-show="contactForm.name.$error.required" translate>NAME_REQUIRED</span>
+                  </span>
+              </div>
+              <div class="form-group  passPar">
+                <input type="email" class="form-control" placeholder="Email Address"  name="email" ng-model="contactData.emailID" required>
+                <span class="error-msgs" ng-show="contactForm.email.$dirty && contactForm.email.$invalid">
+                  <span ng-show="contactForm.email.$error.required" translate>EMAIL_REQUIRED</span>
+                </span>
+              </div>
+
+              <div class="form-group">
+                <textarea class="form-control" rows="5" placeholder="Message " name="message" ng-model="contactData.message" maxlength="160" required></textarea>
+                <span>{{160 - contactData.message.length}}</span>
+
+                <span class="error-msgs" ng-show="contactForm.message.$dirty && contactForm.message.$invalid">
+                  <span ng-show="contactForm.message.$error.required" translate>MESSAGE_REQUIRED</span>
+                </span>
+              </div>
+                  
+              <div class="text-right">
+                  <button class="btn btn-sm btn-primary theme_btn theme_dark" data-dismiss="modal" aria-label="Close" translate>CANCEL</button>
+                  <button class="btn btn-sm btn-primary theme_btn" ng-disabled="contactForm.$invalid || contactLoader" disabled="disabled" translate><span ng-if="contactLoader"><i class="fa fa-circle-o-notch fa-spin" ></i></span>DONE</button>
+               </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>

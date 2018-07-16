@@ -1,0 +1,63 @@
+<div id="content" ng-controller="userCtrl">
+<div id="content-header">
+  <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="javascript:void(0)" class="current">Send Notifications</a> </div>
+  <h1>Send Notifications</h1>
+</div>
+    <div class="container-fluid">
+        <hr>
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+          <h5>Send Notifications</h5>
+           <a ui-sref="viewNotificationHistory" href="/admin/notifications-history" title="Click Here To View Notifications History" class="btn btn-primary pull-right" style="margin:3px;">View Notifications History</a>
+        </div>
+        <div class="widget-content nopadding">
+          <form method="post" novalidate class="form-horizontal" id="sendNotificationForm" name="sendNotificationForm" ng-submit="sendNotificationForm.$valid && insertSendNotifications()">
+            <center><span style="color:red" ng-if="errorMessage">{{ errorMessage }}</span>
+            <span style="color:green" ng-if="successMessage">{{ successMessage }}</span>
+            <div style="margin-top:10px;" class="loadersmall" ng-if="isLoading"></div></center>
+            <div class="control-group">
+              <label class="control-label">Title</label>
+              <div class="controls">
+                <input type="text"  class="span11" placeholder="Enter Title" name="title" ng-model="title" required/>
+                <span class="error-msgs" ng-show="sendNotificationForm.title.$dirty && sendNotificationForm.title.$invalid">
+                    <span ng-show="sendNotificationForm.title.$error.required">Title is required.</span>
+                </span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label">Message</label>
+              <div class="controls">
+              <textarea class="span11" placeholder="Enter Message" name="message" ng-model="message" required rows="10"></textarea>
+                <span class="error-msgs" ng-show="sendNotificationForm.message.$dirty && sendNotificationForm.message.$invalid">
+                    <span ng-show="sendNotificationForm.message.$error.required">Message is required.</span>
+                </span>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label"></label>
+              <div class="controls">
+                <div class="checkbox">
+                  <label><input type="checkbox" value="1" ng-model="isAllUsers" ng-change="ShowHideAllUsers()">Want to send for all users ?</label>
+                </div>
+              </div>
+            </div>
+            <div class="control-group" ng-init="getUsersList()" ng-show="isSelectedUsers">
+              <label class="control-label">Select Users</label>
+              <div class="controls">
+              <select class="span11" ui-select2 multiple data-placeholder="Select Users" name="users" ng-model="users">
+                  <option ng-repeat="x in records" value="{{x.userID}}">{{x.userEmailID}}</option>
+              </select>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success" ng-disabled="sendNotificationForm.$invalid" disabled="disabled">Send</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+</div>

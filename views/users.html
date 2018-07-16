@@ -1,0 +1,52 @@
+<div id="content" ng-controller="userCtrl">
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="javascript:void(0);" class="current">Users</a> </div>
+    <h1>Users List</h1>
+  </div>
+  <div class="container-fluid">
+    <hr>
+    <button class="btn btn-primary pull-right" ng-json-export-excel data="records" report-fields="{'userEmailID': 'Email ID', userFirstName: 'First Name', userLastName: 'Last Name', noOfFollowers: 'No Of Followers', noOfFollowings: 'No Of Followings', createdAt: 'Registration Date (UTC)'}", filename ="'users-data'" class="css-class" ng-click="getUsersList()" title="Export Users"> Export</button>
+    <center><span style="color:red" ng-if="errorMessage">{{ errorMessage }}</span>
+      <span style="color:green" ng-if="successMessage">{{ successMessage }}</span>
+      <div style="margin-top:10px;" class="loadersmall" ng-if="isLoading"></div></center>
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="widget-box">
+            <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+              <h5>Users</h5>
+            </div>
+            
+
+            <div class="widget-content nopadding">
+              <table class="table table-striped table-bordered users-list" datatable="ng" dt-options="vm.dtOptions" ng-init="getUsersList()">
+                <thead>
+                  <tr>
+                    <th>S.No.</th>
+                    <th>Email ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>No Of Followers</th>
+                    <th>No Of Followings</th>
+                    <th>Is Verified</th>
+                    <th>Registration Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="gradeX" ng-repeat="x in records">
+                    <td>{{$index + 1}}</td>
+                    <td>{{x.userEmailID}}</td>
+                    <td>{{x.userFirstName}}</td>
+                    <td>{{x.userLastName}}</td>
+                    <td>{{x.noOfFollowers}}</td>
+                    <td>{{x.noOfFollowings}}</td>
+                    <td>{{x.userStatus == 0 ? 'No' : 'Yes'}}</td>
+                    <td>{{x.createdAt| convertIntoUserTimeZone}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
